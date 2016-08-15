@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body class="grey lighten-3">
+  <nav class="deep-orange lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Cookbook</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Categoria 1</a></li>
+        <li><a href="#">Categoria 2</a></li>
+        <li><a href="#">Categoria 3</a></li>
+        <li><a href="#">Categoria 4</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Categoria 1</a></li>
+        <li><a href="#">Categoria 2</a></li>
+        <li><a href="#">Categoria 3</a></li>
+        <li><a href="#">Categoria 4</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="container ">
+    <h2 class="header">Recipe</h2>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="name" type="text" class="validate">
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="chef" type="text" class="validate">
+            <label for="chef" data-error="Wrong" data-success="Right">Chef</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select>
+              <option value="" disabled selected>Choose your category</option>
+              <option value="1">Pastas</option>
+              <option value="2">Salads</option>
+              <option value="3">Meat</option>
+              <option value="3">Desserts</option>
+            </select>
+            <label>Category</label>
+          </div>          
+        </div>
+        <div class="row">
+          <h4>Ingredients</h4>
+          <div class="row">
+            <div class="input-field col s5">
+              <input id="name" type="text" class="validate">
+              <label for="name">Name</label>
+            </div>
+            <div class="input-field col s5">
+              <input id="name" type="text" class="validate">
+              <label for="name">Ammount</label>
+            </div>
+            <div class="input-field col s2">
+              <a class="btn-floating"><i class="material-icons">add</i></a>
+            </div>            
+          </div>
+          
+          <div class="col s12">
+            <table class="responsive-table">
+              <thead>
+                <tr>
+                    <th data-field="id">Name</th>
+                    <th data-field="name">Ammount</th>
+                    <th data-field="price"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Alvin</td>
+                  <td>$3.76</td>
+                  <td><a class="btn-floating red"><i class="material-icons">remove</i></a></td>
+                </tr>
+                <tr>
+                  <td>Alan</td>
+                  <td>$7.00</td>
+                  <td><a class="btn-floating red"><i class="material-icons">remove</i></a></td>
+                </tr>
+                <tr>
+                  <td>Jonathan</td>
+                  <td>15.2</td>
+                  <td><a class="btn-floating red"><i class="material-icons">remove</i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>        
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="description" class="materialize-textarea" rows="10"></textarea>
+            <label for="description">Description</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+  </div>
+
+  <footer class="page-footer grey darken-3">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m6">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+        </div>
+        <div class="col s12 m6">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Admin</a></li>
+            <li><a class="white-text" href="#!">About</a></li>
+          </ul>
+        </div>        
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>
