@@ -1,2 +1,14 @@
 export const CREATE_RECIPE = 'CREATE_RECIPE';
+export const ADD_RECIPE = 'ADD_RECIPE';
+export const UPDATE_RECIPE = 'UPDATE_RECIPE';
+export const DELETE_RECIPE = 'DELETE_RECIPE';
+export const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER';
 
+
+export const CategoryFilters = {
+    SHOW_ALL: 'SHOW_ALL',
+    SHOW_PASTAS: 'SHOW_PASTAS',
+    SHOW_SALADS: 'SHOW_SALADS',
+    SHOW_MEAT: 'SHOW_MEAT',
+    SHOW_DESSERTS: 'SHOW_DESSERTS'
+};

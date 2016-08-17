@@ -1,8 +1,12 @@
 import * as types from '../actions/actionTypes';
 
-let recipeReducer = (state = [], action)=>{
+const recipesReducer = (state = [], action) => {
     switch(action.type){
         case types.CREATE_RECIPE:
+            return [...state,
+                Object.assign({}, action.recipe)
+            ];
+        case types.ADD_RECIPE:
             return [...state,
                 Object.assign({}, action.recipe)
             ];
@@ -11,4 +15,4 @@ let recipeReducer = (state = [], action)=>{
     }
 };
 
-export default recipeReducer;
+export default recipesReducer;

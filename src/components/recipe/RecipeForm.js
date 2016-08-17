@@ -51,7 +51,7 @@ class RecipeForm extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div class="input-field col s12">
+                        <div className="input-field col s12">
                             <textarea name="description" 
                                 className="materialize-textarea"
                                 onChange={this.onDescriptionChange.bind(this)}  
