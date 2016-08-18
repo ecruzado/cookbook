@@ -22,3 +22,7 @@ export const addRecipe = (name, recipe) => {
 export const setCategoryFilter = (category) => {
     return {type: types.SET_CATEGORY_FILTER, category}
 };
+
+export const toggleRecipe = (name, recipe) => {
+    return {type: types.ADD_RECIPE, recipe}
+};
