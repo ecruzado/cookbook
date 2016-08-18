@@ -1,20 +1,17 @@
 import React, { PropTypes } from 'react';
 
 const Recipe = ({ onClick, name, chef, category, preparation }) => (
-  <div className="col s12 l6">
-      <h4 className="header" onClick={onClick}>{name}</h4>
-      <div className="card horizontal">
-          <div className="card-stacked">
-              <div className="card-content">
-                  <p>{preparation}</p>
-              </div>
-              <div className="card-action">
-                  <a href="#">This is a link</a>
-                  {chef}
-                  {category}
-              </div>
-          </div>
-      </div>
+  <div className="col s12 m6">
+    <div className="card light-green lighten-5">
+        <div className="card-content ">
+            <span className="card-title">{name}</span>
+            <p>{preparation}</p>
+        </div>
+        <div className="card-action">
+            <a href="#" onClick={onClick}>{chef}</a>
+            <a href="#" onClick={onClick}>{category}</a>
+        </div>        
+    </div>
   </div>
 );
 

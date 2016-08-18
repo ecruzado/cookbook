@@ -6,9 +6,9 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 import routes from './routes';
 import '../static/libs/materialize/materialize.css';
-// import './styles/styles.css';
+import './styles/styles.css';
 import $ from "jquery";
-//import '../static/libs/materialize/materialize';
+import Materialize from 'materialize-css';
 
 const store = configureStore({
     categoryFilter:'SHOW_ALL',

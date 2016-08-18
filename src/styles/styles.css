@@ -1,3 +1,3 @@
-#app{
-    font-size: 14px;
+.pagination li.active{
+    background-color: #4f8511;
 }
