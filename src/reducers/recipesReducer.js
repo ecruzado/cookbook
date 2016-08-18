@@ -2,7 +2,7 @@ import * as types from '../actions/actionTypes';
 
 const recipesReducer = (state = [], action) => {
     //console.log("recipe");
-    //console.log(state);
+    console.log(action);
 
     switch(action.type){
         case types.CREATE_RECIPE:

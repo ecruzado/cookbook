@@ -2,10 +2,9 @@ import React, { PropTypes } from 'react';
 import Recipe from './Recipe';
 
 const RecipeList = ({ recipes, onRecipeClick }) => {
-  console.log('tmr');
-  console.log(recipes);
   return(
-    <ul>
+  <div className="">
+    <div className="row">
       {recipes.map(recipe =>
         <Recipe
           key={recipe.id}
@@ -13,7 +12,8 @@ const RecipeList = ({ recipes, onRecipeClick }) => {
           onClick={() => onRecipeClick(recipe.id)}
         />
       )}
-    </ul>
+      </div>           
+  </div>
   );
 
 };

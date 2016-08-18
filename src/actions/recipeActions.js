@@ -14,8 +14,11 @@ export function createRecipe(recipe){
 //     return {type: ADD_RECIPE, name, category, chef, preparation}
 // };
 
-export const addRecipe = (name, recipe) => {
-    return {type: types.ADD_RECIPE, recipe}
+let nextRecipeId = 50;
+
+export const addRecipe = (recipe) => {
+    Object.assign(recipe, {id: nextRecipeId++});
+    return {type: types.ADD_RECIPE, recipe};
 };
 
 

@@ -18,15 +18,19 @@
 
 // export default App;
 import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
 import ListFilter from './ListFilter';
 import AddRecipe from '../containers/AddRecipe';
 import VisibleRecipeList from '../containers/VisibleRecipeList';
 
 const App = () => (
   <div>
+    <Header />
     <ListFilter />
     <VisibleRecipeList />
     <AddRecipe />
+    <Footer />
   </div>
 )
 

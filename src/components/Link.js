@@ -1,19 +1,22 @@
 import React, { PropTypes } from 'react';
 
 const Link = ({ active, children, onClick }) => {
-  if (active) {
-    return <span>{children}</span>
-  }
+  let currentClass = active? 'active': 'waves-effect';
 
+  // if (active) {
+  //   return <span>{children}</span>
+  // }
   return (
-    <a href="#"
-       onClick={e => {
-         e.preventDefault()
-         onClick()
-       }}
-    >
-      {children}
-    </a>
+    <li className={currentClass}>
+      <a href="#" 
+        onClick={e => {
+          e.preventDefault()
+          onClick()
+        }}
+      >
+        {children}
+      </a>
+    </li>
   )
 };
 

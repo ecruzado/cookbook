@@ -3,6 +3,8 @@ import { toggleRecipe } from '../actions/recipeActions';
 import RecipeList from '../components/RecipeList';
 
 const getVisibleRecipes = (recipes, filter) => {
+  //console.log(recipes);
+  //console.log(filter);
   switch (filter) {
     case 'SHOW_ALL':
       return recipes;

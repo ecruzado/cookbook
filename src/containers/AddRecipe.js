@@ -3,23 +3,44 @@ import { connect } from 'react-redux';
 import { addRecipe } from '../actions/recipeActions';
 
 let AddRecipe = ({ dispatch }) => {
-  let input;
+  let inputName, inputChef, inputCategory, inputPreparation;
 
   return (
     <div>
       <form onSubmit={e => {
         e.preventDefault();
-        if (!input.value.trim()) {
+        if (!inputName.value.trim() 
+          || !inputChef.value.trim()
+          || !inputCategory.value.trim()
+          || !inputPreparation.value.trim()
+        ) {
           return;
         }
-        dispatch(addRecipe(input.value))
-        input.value = ''
+        dispatch(addRecipe({
+          name: inputName.value, 
+          chef: inputChef.value, 
+          category: inputCategory.value, 
+          preparation: inputPreparation.value
+        }))
+        inputName.value = ''
+        inputChef.value = ''
+        inputCategory.value = ''
+        inputPreparation.value = ''
       }}>
-        <input ref={node => {
-          input = node
+        <input placeholder="name" ref={node => {
+          inputName = node
+        }} />
+        <input placeholder="chef" ref={node => {
+          inputChef = node
+        }} />
+        <input placeholder="category" ref={node => {
+          inputCategory = node
+        }} />
+        <input placeholder="preparation" ref={node => {
+          inputPreparation = node
         }} />
         <button type="submit">
-          Add Todo
+          Add Recipe
         </button>
       </form>
     </div>
