@@ -1,18 +1,15 @@
 {
-  "name": "pluralsight-redux-starter",
-  "version": "1.0.0",
-  "description": "Starter kit for React and Redux Pluralsight course by Cory House",
+  "name": "cookbook",
+  "version": "0.0.1",
+  "description": "recipes web application",
   "scripts": {
     "prestart": "babel-node tools/startMessage.js",
-    "start": "npm-run-all --parallel test:watch open:src lint:watch",
+    "start": "npm-run-all --parallel open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
-    "lint:watch": "npm run lint -- --watch",
-    "test": "mocha --reporter progress tools/testSetup.js \"src/**/*.test.js\"",
-    "test:watch": "npm run test -- --watch"
+    "lint:watch": "npm run lint -- --watch"
   },
-  "author": "Cory House",
-  "license": "MIT",
+  "author": "Edgar Cruzado",
   "dependencies": {
     "babel-polyfill": "6.8.0",
     "bootstrap": "3.3.6",
@@ -67,6 +64,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/coryhouse/pluralsight-redux-starter"
+    "url": "https://github.com/ecruzado/cookbook"
   }
 }
