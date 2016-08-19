@@ -8,10 +8,10 @@ const Recipe = ({ onClick, name, chef, category, preparation }) => (
             <p>{preparation}</p>
         </div>
         <div className="card-action">
-            <span>{category}</span>
+            <span><i className="material-icons">label_outline</i>{category}</span>
             <span> | </span>
-            <span>{chef}</span>
-            <a href="#" className="right" onClick={onClick}>Edit</a>
+            <span><i className="material-icons">person_pin</i>{chef}</span>
+            <a href="javascript:void(0);" className="right" onClick={onClick}>Edit</a>
         </div>        
     </div>
   </div>

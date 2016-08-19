@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import Recipe from './Recipe';
 
 const RecipeList = ({ recipes, onRecipeClick }) => {
-    //console.log(recipes);
   return(
   <div className="">
     <div className="row">

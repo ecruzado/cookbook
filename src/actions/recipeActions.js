@@ -1,10 +1,4 @@
 import * as types from './actionTypes';
-// let createRecipe = (recipe) => {
-//     return {type: 'CREATE_COURSE', recipe};
-// };
-
-// export default createRecipe;
-
 
 export function createRecipe(recipe){
     return {type: types.CREATE_RECIPE, recipe};    
@@ -30,7 +24,9 @@ export const rateRecipe = (id) => {
 };
 
 export const setCurrentRecipeId = (id) => {
-    //console.log("setCurrentRecipeId");
-    //console.log(id);    
     return {type: types.SET_CURRENT_RECIPEID, id}
+};
+
+export const setNameFilter = (name) => {
+    return {type: types.SET_NAME_FILTER, name}
 };

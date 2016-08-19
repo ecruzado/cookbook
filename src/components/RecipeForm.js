@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import Recipe from './Recipe';
 
 const RecipeForm = ({recipe, onRecipeSave}) => {
-  //console.log(recipe);
   let inputName, inputChef, inputPreparation, selectCategory;
 
   return (

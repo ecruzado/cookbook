@@ -3,8 +3,6 @@ import { addRecipe, updateRecipe, setCurrentRecipeId } from '../actions/recipeAc
 import RecipeForm from '../components/RecipeForm';
 
 const getRecipe = (recipes, recipeId) => {
-    //console.log(recipes);
-    //console.log(recipes.find(x => x.id === recipeId));
     if(!recipeId || recipeId === 0){
         return {};
     }else{
@@ -21,13 +19,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeSave: (recipe) => {
-      console.log(recipe);
       if(recipe.id && recipe.id !== 0){
-        console.log('up');
         dispatch(updateRecipe(recipe));
         dispatch(setCurrentRecipeId(0));
       }else{
-        console.log('cre');
         dispatch(addRecipe(recipe));
       }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import HeaderSearch from '../containers/HeaderSearch';
 import Footer from './Footer';
 import ListFilter from './ListFilter';
 import AddRecipe from '../containers/AddRecipe';
@@ -21,7 +22,7 @@ class App extends React.Component{
   render(){
     return(
       <div>
-        <Header />
+        <HeaderSearch/>
         <ListFilter />
         <VisibleRecipeList />
         <RecipeFormContainer />
