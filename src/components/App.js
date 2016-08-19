@@ -16,7 +16,6 @@ import Materialize from 'materialize-css';
 //     <Footer />
 //   </div>
 // )
-
 class App extends React.Component{
   render(){
     return(

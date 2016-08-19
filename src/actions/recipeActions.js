@@ -15,7 +15,6 @@ export function createRecipe(recipe){
 // };
 
 let nextRecipeId = 50;
-
 export const addRecipe = (recipe) => {
     Object.assign(recipe, {id: nextRecipeId++});
     return {type: types.ADD_RECIPE, recipe};
@@ -26,6 +25,6 @@ export const setCategoryFilter = (category) => {
     return {type: types.SET_CATEGORY_FILTER, category}
 };
 
-export const toggleRecipe = (name, recipe) => {
-    return {type: types.ADD_RECIPE, recipe}
+export const rateRecipe = (id) => {
+    return {type: types.RATE_RECIPE, id}
 };
