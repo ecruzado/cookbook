@@ -36,7 +36,42 @@ const store = configureStore({
         },
         {
             id: 4,
-            name: 'suspiro a la limena',
+            name: 'Dish4',
+            chef: 'gaston acurio',
+            category: 'PASTAS',
+            preparation: "tallarin's preparation"
+        },
+        {
+            id: 5,
+            name: 'Dish5',
+            chef: 'gaston acurio',
+            category: 'PASTAS',
+            preparation: "tallarin's preparation"
+        },
+        {
+            id: 6,
+            name: 'Dish6',
+            chef: 'gaston acurio',
+            category: 'PASTAS',
+            preparation: "tallarin's preparation"
+        },
+        {
+            id: 7,
+            name: 'Dish7',
+            chef: 'gaston acurio',
+            category: 'SALADS',
+            preparation: "tallarin's preparation"
+        },
+        {
+            id: 8,
+            name: 'Dish8',
+            chef: 'gaston acurio',
+            category: 'PASTAS',
+            preparation: "tallarin's preparation"
+        },
+        {
+            id: 9,
+            name: 'Dish9',
             chef: 'gaston acurio',
             category: 'DESSERTS',
             preparation: "suspiros's preparation"

@@ -1,13 +1,19 @@
 import React, { PropTypes } from 'react';
 import Recipe from './Recipe';
+import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, onRecipeSave}) => {
   let inputName, inputChef, inputPreparation, selectCategory;
+  let list = [
+    {id:1, name: 'ingredient 1', quantity: '500g'},
+    {id:2, name: 'ingredient 2', quantity: '100g'},
+    {id:3, name: 'ingredient 3', quantity: '200g'}
+  ];
 
   return (
     <div className="container">
     <div className="row">
-      <h3 class="header">Recipe Container</h3>
+      <h3 class="header">Recipe</h3>
       <form className="col s12" onSubmit={e => {
         e.preventDefault();
         if (!inputName.value.trim() 
@@ -83,6 +89,16 @@ const RecipeForm = ({recipe, onRecipeSave}) => {
             <label for="name">Preparation</label>
           </div>
         </div>
+        
+        <IngredientList list={list} onChange={ingredient=>{
+          let indexIng = list.findIndex(item => item.id == ingredient.id);
+          lis = list.map((item, index)=>{
+            if(index === indexIng){
+              return Object.assign({}, ingredient);
+            }
+            return item;
+          });
+        }}/>
       
         <button type="submit" className="waves-effect waves-light btn">
           Save Recipe

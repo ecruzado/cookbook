@@ -6,6 +6,8 @@ import ListFilter from './ListFilter';
 import AddRecipe from '../containers/AddRecipe';
 import RecipeFormContainer from '../containers/RecipeFormContainer';
 import VisibleRecipeList from '../containers/VisibleRecipeList';
+import IngredientList from './IngredientList';
+
 //import $ from "jquery";
 import Materialize from 'materialize-css';
 
@@ -19,6 +21,7 @@ import Materialize from 'materialize-css';
 //   </div>
 // )
 class App extends React.Component{
+
   render(){
     return(
       <div>
@@ -34,7 +37,19 @@ class App extends React.Component{
   componentDidMount(){
     //Materialize.updateTextFields();
     $('select').material_select();
-  }  
+  }
+
+  // onChange(e){
+  //   let recipeIndex = this.state.list.findIndex(recipe => recipe.id == e.id);
+  //   this.setState({
+  //     list: this.state.list.map((ingredient, index)=>{
+  //       if(index === recipeIndex){
+  //         return Object.assign({}, e);
+  //       }
+  //       return ingredient;
+  //     })
+  //   });
+  // }  
 }
 
 export default App

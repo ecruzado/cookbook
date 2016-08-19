@@ -10,11 +10,9 @@ const getRecipe = (recipes, recipeId) => {
     }
 };
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     recipe: getRecipe(state.recipes, state.currentRecipeId)
-  };
-};
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
