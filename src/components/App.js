@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import ListFilter from './ListFilter';
 import AddRecipe from '../containers/AddRecipe';
+import RecipeFormContainer from '../containers/RecipeFormContainer';
 import VisibleRecipeList from '../containers/VisibleRecipeList';
 //import $ from "jquery";
 import Materialize from 'materialize-css';
@@ -23,7 +24,7 @@ class App extends React.Component{
         <Header />
         <ListFilter />
         <VisibleRecipeList />
-        <AddRecipe />
+        <RecipeFormContainer />
         <Footer />
       </div>
     );

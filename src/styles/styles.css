@@ -1,3 +1,7 @@
 .pagination li.active{
     background-color: #4f8511;
 }
+
+.card-action a.right {
+    float: right;
+}

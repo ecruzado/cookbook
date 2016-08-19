@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 import categoryFilter from './categoryFilterReducer';
 import recipes from './recipesReducer';
+import currentRecipeId from './currentRecipeIdReducer';
 
 const rootReducer = combineReducers({
     recipes,
-    categoryFilter
+    categoryFilter,
+    currentRecipeId
 });
 
 export default rootReducer;

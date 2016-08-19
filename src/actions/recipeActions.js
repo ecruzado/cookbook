@@ -8,16 +8,16 @@ import * as types from './actionTypes';
 
 export function createRecipe(recipe){
     return {type: types.CREATE_RECIPE, recipe};    
-}
-
-// export const addRecipe = (name, category, chef, preparation) => {
-//     return {type: ADD_RECIPE, name, category, chef, preparation}
-// };
+};
 
 let nextRecipeId = 50;
 export const addRecipe = (recipe) => {
     Object.assign(recipe, {id: nextRecipeId++});
     return {type: types.ADD_RECIPE, recipe};
+};
+
+export const updateRecipe = (recipe) => {
+    return {type: types.UPDATE_RECIPE, recipe};
 };
 
 
@@ -27,4 +27,10 @@ export const setCategoryFilter = (category) => {
 
 export const rateRecipe = (id) => {
     return {type: types.RATE_RECIPE, id}
+};
+
+export const setCurrentRecipeId = (id) => {
+    //console.log("setCurrentRecipeId");
+    //console.log(id);    
+    return {type: types.SET_CURRENT_RECIPEID, id}
 };

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { rateRecipe } from '../actions/recipeActions';
+import { setCurrentRecipeId } from '../actions/recipeActions';
 import RecipeList from '../components/RecipeList';
 
 const getVisibleRecipes = (recipes, filter) => {
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeClick: (id) => {
-      dispatch(rateRecipe(id));
+      dispatch(setCurrentRecipeId(id));
     }
   };
 };
