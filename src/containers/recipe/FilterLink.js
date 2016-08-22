@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { setCategoryFilter } from '../actions/recipeActions';
-import Link from '../components/Link';
+import { setCategoryFilter } from '../../actions/recipeActions';
+import Link from './Link';
 
 const mapStateToProps = (state, ownProps) => {
   return {

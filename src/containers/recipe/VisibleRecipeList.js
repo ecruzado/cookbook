@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { setCurrentRecipeId } from '../actions/recipeActions';
-import RecipeList from '../components/RecipeList';
+import { setCurrentRecipeId } from '../../actions/recipeActions';
+import RecipeList from './RecipeList';
 
 const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
   switch (categoryFilter) {

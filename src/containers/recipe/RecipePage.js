@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
-import { addRecipe, updateRecipe, setCurrentRecipeId } from '../actions/recipeActions';
-import RecipeForm from '../components/RecipeForm';
+import { addRecipe, updateRecipe, setCurrentRecipeId } from '../../actions/recipeActions';
+import RecipeForm from './RecipeForm';
 
 const getRecipe = (recipes, recipeId) => {
+
     if(!recipeId || recipeId === 0){
         return {};
     }else{
-        return recipes.find(x => x.id === recipeId);
+        return recipes.find(x => x.id === +recipeId);
     }
 };
 
-const mapStateToProps = (state) => ({
-    recipe: getRecipe(state.recipes, state.currentRecipeId)
+const mapStateToProps = (state, ownProps) => ({
+    recipe: getRecipe(state.recipes, ownProps.params.id)
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -28,9 +29,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const RecipeFormContainer = connect(
+const RecipePage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RecipeForm);
 
-export default RecipeFormContainer;
+export default RecipePage;
