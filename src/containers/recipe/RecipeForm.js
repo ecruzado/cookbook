@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import IngredientList from './IngredientList';
+import IngredientList from './ingredient/IngredientList';
 
 const RecipeForm = ({recipe, onRecipeSave}) => {
   let inputName, inputChef, inputPreparation, selectCategory;

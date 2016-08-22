@@ -1,24 +1,28 @@
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { setCategoryFilter } from '../../actions/recipeActions';
-import Link from './Link';
 
-const mapStateToProps = (state, ownProps) => {
-  return {
+@connect(
+  (state, ownProps) => ({
     active: ownProps.filter === state.categoryFilter
-  }
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: () => {
-      dispatch(setCategoryFilter(ownProps.filter))
+  }), 
+  (dispatch, ownProps) => ({
+    onClick: (event) => {
+      event.preventDefault();
+      dispatch(setCategoryFilter(ownProps.filter));
     }
-  }
-};
+  })
+)
+export default class FilterLink extends React.Component {
+  render(){
+    let currentClass = this.props.active? 'active': 'waves-effect';
 
-const FilterLink = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Link);
-
-export default FilterLink;
+    return (
+      <li className={currentClass}>
+        <a href="#" onClick={this.props.onClick}>
+          {this.props.children}
+        </a>
+      </li>
+    )
+  }    
+}
