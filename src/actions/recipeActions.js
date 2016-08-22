@@ -1,13 +1,9 @@
 import * as types from './actionTypes';
 
-export function createRecipe(recipe){
-    return {type: types.CREATE_RECIPE, recipe};    
-};
-
 let nextRecipeId = 50;
-export const addRecipe = (recipe) => {
+export const createRecipe = (recipe) => {
     Object.assign(recipe, {id: nextRecipeId++});
-    return {type: types.ADD_RECIPE, recipe};
+    return {type: types.CREATE_RECIPE, recipe};    
 };
 
 export const updateRecipe = (recipe) => {

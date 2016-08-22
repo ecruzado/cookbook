@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { addRecipe, updateRecipe, setCurrentRecipeId } from '../../actions/recipeActions';
+import { createRecipe, updateRecipe, setCurrentRecipeId } from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 
-const getRecipe = (recipes, recipeId) => {
+const getRecipe = (recipes, recipeId = 0) => {
 
     if(!recipeId || recipeId === 0){
         return {};
@@ -18,11 +18,12 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeSave: (recipe) => {
+      console.log(recipe);
       if(recipe.id && recipe.id !== 0){
         dispatch(updateRecipe(recipe));
         dispatch(setCurrentRecipeId(0));
       }else{
-        dispatch(addRecipe(recipe));
+        dispatch(createRecipe(recipe));
       }
 
     }

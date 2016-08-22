@@ -6,10 +6,6 @@ const recipesReducer = (state = [], action) => {
             return [...state,
                 Object.assign({}, action.recipe)
             ];
-        case types.ADD_RECIPE:
-            return [...state,
-                Object.assign({}, action.recipe)
-            ];
         case types.UPDATE_RECIPE:
             return [
                  ...state.filter(recipe => recipe.id !== action.recipe.id),

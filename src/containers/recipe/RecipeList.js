@@ -1,18 +1,24 @@
 import React, { PropTypes } from 'react';
-import Recipe from './Recipe';
+import RecipeCard from './RecipeCard';
+import {Link} from 'react-router';
 
 const RecipeList = ({ recipes, onRecipeClick }) => {
   return(
   <div className="">
     <div className="row">
       {recipes.map(recipe =>
-        <Recipe
+        <RecipeCard
           key={recipe.id}
           {...recipe}
           onClick={() => onRecipeClick(recipe.id)}
         />
       )}
-      </div>           
+      </div>
+      <div className="fixed-action-btn" >
+        <Link className="btn-floating btn-large red" to="recipe">
+          <i className="material-icons">add</i>
+        </Link>
+      </div>
   </div>
   );
 

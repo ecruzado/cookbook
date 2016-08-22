@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Recipe from './Recipe';
 import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, onRecipeSave}) => {
@@ -19,10 +18,10 @@ const RecipeForm = ({recipe, onRecipeSave}) => {
         if (!inputName.value.trim() 
           || !inputChef.value.trim()
           || !inputPreparation.value.trim()
-          || !selectCategory.value.trim()
         ) {
           return;
         }
+
         onRecipeSave({
           id: recipe.id?recipe.id : 0,
           name: inputName.value, 
@@ -104,6 +103,7 @@ const RecipeForm = ({recipe, onRecipeSave}) => {
           Save Recipe
         </button>
       </form>
+
     </div>
     </div>
   );
