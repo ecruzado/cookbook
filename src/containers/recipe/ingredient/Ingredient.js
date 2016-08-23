@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Ingredient = ({id, name, quantity, onChange})=> {
+const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
     let inputName, inputQuantity;
+    
     return (
         <tr>
             <td>
@@ -28,7 +29,10 @@ const Ingredient = ({id, name, quantity, onChange})=> {
                     }
                 }/>
             </td>
-            <td><a className="btn-floating red"><i className="material-icons">remove</i></a></td>
+            <td><a className="btn-floating red" onClick={(e)=>{
+                e.preventDefault();
+                onRemove(id);
+            }}><i className="material-icons">remove</i></a></td>
         </tr>
     );
 };

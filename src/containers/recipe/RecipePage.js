@@ -21,7 +21,6 @@ const mapDispatchToProps = (dispatch) => {
       console.log(recipe);
       if(recipe.id && recipe.id !== 0){
         dispatch(updateRecipe(recipe));
-        dispatch(setCurrentRecipeId(0));
       }else{
         dispatch(createRecipe(recipe));
       }
