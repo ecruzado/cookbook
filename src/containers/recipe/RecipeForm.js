@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import IngredientList from './ingredient/IngredientList';
 
-class RecipeForm extends React.Component { // = ({recipe, onRecipeSave}) => {
+class RecipeForm extends React.Component {
   
   constructor(props){
     super(props);
@@ -40,10 +40,6 @@ class RecipeForm extends React.Component { // = ({recipe, onRecipeSave}) => {
         return item;
       })
     });
-  }
-
-  onSave(recipe){
-    console.log(recipe);
   }
 
   render(){
