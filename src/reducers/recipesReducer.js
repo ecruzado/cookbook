@@ -7,18 +7,26 @@ export default function recipesReducer(state = [], action){
             return [...state,
                 Object.assign({}, action.recipe)
             ];
-        // case types.UPDATE_RECIPE:
-        //     return [
-        //          ...state.filter(recipe => recipe.id !== action.recipe.id),
-        //          Object.assign({}, action.recipe)
-        //     ];
         case types.UPDATE_RECIPE:
             return state.map((item, index)=>{
                 if(item.id === action.recipe.id){
                     return Object.assign({}, action.recipe);
                 }
                 return item;
-            });                          
+            }); 
+        case types.CREATE_RECIPE_SUCCESS:
+            return [...state,
+                Object.assign({}, action.recipe)
+            ];
+        case types.UPDATE_RECIPE_SUCCESS:
+            return state.map((item, index)=>{
+                if(item.id === action.recipe.id){
+                    return Object.assign({}, action.recipe);
+                }
+                return item;
+            });             
+        case types.LOAD_RECIPES_SUCCESS:
+            return action.recipes;                         
         default:
             return state;
     }
