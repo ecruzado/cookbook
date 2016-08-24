@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import recipeApi from '../api/mockRecipeApi';
+import recipeApiClient from '../apiClient/recipeApiClient';
 
 let nextRecipeId = 50;
 export const createRecipe = (recipe) => {
@@ -39,21 +40,59 @@ export const updateRecipeSuccess = (recipe) => {
     return {type: types.UPDATE_RECIPE_SUCCESS, recipe}
 };
 
+export const loadRecipeSuccess = (recipe) => {
+    return {type: types.LOAD_RECIPE_SUCCESS, recipe}
+};
+
+
 export const loadRecipes = () => {
     return function(dispatch){
-        return recipeApi.getAllRecipes().then(recipes=>{
-            dispatch(loadRecipesSuccess(recipes));
-        }).catch(error=>{
-            throw error;
-        });
+        recipeApiClient.getAllRecipes().end((err, res)=>{
+            dispatch(loadRecipesSuccess(res.body));
+        }); 
+        // return recipeApiClient.getAllRecipes().then(recipes=>{
+        //     console.log(recipes);
+        //     dispatch(loadRecipesSuccess(recipes));
+        // }).catch(error=>{
+        //     console.log('error');
+        //     throw error;
+        // });
     }
 };
 
 export const saveRecipe = (recipe) => {
+    // return function(dispatch){
+    //     return recipeApi.saveRecipe(recipe).then(savedRecipe =>{
+    //         recipe.id? dispatch(updateRecipeSuccess(savedRecipe)) :
+    //             dispatch(createRecipeSuccess(savedRecipe));
+    //     });
+    // }
+    console.log('saveRecipe action: ');
+    console.log(recipe);
+    console.log(JSON.stringify(recipe));
+    recipeApiClient.postRecipe(recipe);
+    
+    // return function(dispatch){
+    //     recipeApiClient.postRecipe(recipe);
+    //     // recipeApiClient.postRecipe(recipe).end((err, res)=>{
+    //     //     console.log('postRecipe call completed');
+    //     //     //dispatch(loadRecipeSuccess(res.body));
+    //     // });
+    // }    
+};
+
+
+export const loadRecipe = (id) => {
     return function(dispatch){
-        return recipeApi.saveRecipe(recipe).then(savedRecipe =>{
-            recipe.id? dispatch(updateRecipeSuccess(savedRecipe)) :
-                dispatch(createRecipeSuccess(savedRecipe));
-        });
+        if(id && id != 0){
+            recipeApiClient.getRecipe(id).end((err, res)=>{
+                console.log('get Recipe call completed');
+                dispatch(loadRecipeSuccess(res.body));
+            });         
+        }else{
+            let recipe = {};
+            recipe.ingredients = [];
+            dispatch(loadRecipeSuccess(recipe));
+        }
     }
 };

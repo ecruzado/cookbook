@@ -3,12 +3,15 @@ import categoryFilter from './categoryFilterReducer';
 import recipes from './recipesReducer';
 import currentRecipeId from './currentRecipeIdReducer';
 import nameFilter from './nameFilterReducer';
+import recipe from './recipeReducer';
+
 
 const rootReducer = combineReducers({
     recipes,
     categoryFilter,
     nameFilter,
-    currentRecipeId
+    currentRecipeId,
+    recipe
 });
 
 export default rootReducer;

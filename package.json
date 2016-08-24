@@ -13,7 +13,9 @@
   "author": "Edgar Cruzado",
   "dependencies": {
     "babel-polyfill": "6.8.0",
+    "body-parser": "^1.15.2",
     "bootstrap": "3.3.6",
+    "cors": "^2.8.0",
     "jquery": "2.2.3",
     "knex": "^0.11.10",
     "materialize-css": "^0.97.7",
@@ -25,6 +27,7 @@
     "react-router-redux": "4.0.4",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
+    "superagent": "^2.2.0",
     "toastr": "2.1.2"
   },
   "devDependencies": {

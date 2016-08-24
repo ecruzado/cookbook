@@ -1,7 +1,6 @@
 import * as types from '../actions/actionTypes';
 
 export default function recipesReducer(state = [], action){
-    console.log(action);
     switch(action.type){
         case types.CREATE_RECIPE:
             return [...state,

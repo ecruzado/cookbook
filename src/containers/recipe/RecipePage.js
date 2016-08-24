@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe} from '../../actions/recipeActions';
+import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe} from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
 
@@ -13,22 +13,24 @@ const getRecipe = (recipes, recipeId = 0) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    recipe: getRecipe(state.recipes, ownProps.params.id)
+    recipe: state.recipe
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeSave: (recipe) => {
-
-      console.log(recipe);
       // if(recipe.id && recipe.id !== 0){
       //   dispatch(updateRecipe(recipe));
       // }else{
       //   dispatch(createRecipe(recipe));
       // }
-      dispatch(saveRecipe(recipe).then(()=>{
-        toastr.success("success")
-      }));
+      dispatch(saveRecipe(recipe));
+      // .then(()=>{
+      //   toastr.success("success")
+      // }));
+    },
+    onLoadRecipe: (id) =>{
+      dispatch(loadRecipe(id));
     }
   };
 };

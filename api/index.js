@@ -1,29 +1,17 @@
 import express from 'express';
-import knex from 'knex';
+import cors from 'cors';
 import open from 'open';
+import recipes from './routes/recipes';
+import bodyParser from 'body-parser';
 
 const port = 8888;
 const app = express();
 
-let cnn = knex({
-    client: 'pg',
-    connection: {
-       "host": 'localhost',
-       "port": '1433',
-       "user": 'postgres',
-       "password": 'S1stem@s',
-       "database": 'coobook'
-    }    
-});
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-
-const list =  async (req, res) => {
-
-    let query = await cnn.from('test').select();
-
-};
-
-app.get('*',list);
+app.use('/recipes', recipes);
 
 app.listen(port, function(err) {
   if (err) {

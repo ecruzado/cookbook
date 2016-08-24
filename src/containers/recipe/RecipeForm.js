@@ -1,50 +1,76 @@
 import React, { PropTypes } from 'react';
 import IngredientList from './ingredient/IngredientList';
+import { setCurrentRecipeId, loadRecipe, saveRecipe} from '../../actions/recipeActions';
 
 class RecipeForm extends React.Component {
   
   constructor(props){
     super(props);
     this.state = {
-      ingredients : this.props.recipe.ingredients?this.props.recipe.ingredients:[]
+      //ingredients : this.props.recipe.ingredients?this.props.recipe.ingredients:[]
+      recipe : this.props.recipe
     };
     this.onAddIngredient = this.onAddIngredient.bind(this);
     this.onRemoveIngredient = this.onRemoveIngredient.bind(this);
     this.onChangeIngredient = this.onChangeIngredient.bind(this);
+    
   }
 
   onAddIngredient(ingredient){
     let lastId = 1;
-    if(this.state.ingredients.length > 0){
-      lastId = this.state.ingredients[this.state.ingredients.length - 1].id;
+    if(this.state.recipe.ingredients.length > 0){
+      lastId = this.state.recipe.ingredients[this.state.recipe.ingredients.length - 1].id;
     }
     ingredient.id = lastId + 1;
+    let tempRecipe = this.state.recipe;
+    tempRecipe.ingredients = [...this.state.recipe.ingredients, ingredient];
     this.setState({
-      ingredients: [...this.state.ingredients, ingredient]
-    });
-  }
-  
-  onRemoveIngredient(id){
-    this.setState({
-      ingredients: this.state.ingredients.filter((x,i)=> x.id!== id)
+      recipe: tempRecipe
     });
   }
 
   onChangeIngredient(ingredient){
-    let indexIng = this.state.ingredients.findIndex(item => item.id == ingredient.id);
+    let indexIng = this.state.recipe.ingredients.findIndex(item => item.id == ingredient.id);
+    let tempRecipe = this.state.recipe;
+    tempRecipe.ingredients = this.state.recipe.ingredients.map((item, index)=>{
+      if(index === indexIng){
+        return Object.assign({}, ingredient);
+      }
+      return item;
+    });
+
     this.setState({
-      ingredients:this.state.ingredients.map((item, index)=>{
-        if(index === indexIng){
-          return Object.assign({}, ingredient);
-        }
-        return item;
-      })
+      recipe: tempRecipe
     });
   }
 
-  render(){
-    let inputName, inputChef, inputPreparation, selectCategory;
+  onRemoveIngredient(id){
+    let tempRecipe = this.state.recipe;
+    tempRecipe.ingredients = this.state.recipe.ingredients.filter((x,i)=> x.id!== id);
+    this.setState({
+      recipe: tempRecipe
+    });
+  }
 
+
+  componentWillReceiveProps(nextProps) {
+      if (this.props.recipe !== nextProps.recipe) {
+          this.setState({ recipe: Object.assign({}, nextProps.recipe) });
+      }
+    }
+
+  componentDidMount(){
+    this.props.onLoadRecipe(this.props.params.id);
+  }
+
+
+  render(){
+    console.log(+ new Date());
+    if(this.props.recipe)
+      console.log(this.props.recipe);
+    if(this.state.recipe)
+      console.log(this.state.recipe);
+    let inputName, inputChef, inputPreparation, selectCategory;
     return (
       <div className="container">
       <div className="row">
@@ -64,14 +90,13 @@ class RecipeForm extends React.Component {
             chef: inputChef.value, 
             category: selectCategory.value, 
             preparation: inputPreparation.value,
-            ingredients: this.state.ingredients
+            ingredients: this.state.recipe.ingredients
           });
-          inputName.value = ''
-          inputChef.value = ''
-          selectCategory.value = ''
-          inputPreparation.value = ''
+          // inputName.value = ''
+          // inputChef.value = ''
+          // selectCategory.value = ''
+          // inputPreparation.value = ''
         }}>
-
           <div class="row">
             <div class="input-field col s12">
               <input ref={node => {
@@ -127,7 +152,7 @@ class RecipeForm extends React.Component {
           </div>
           
           <IngredientList 
-            list={this.state.ingredients} 
+            list={this.state.recipe.ingredients} 
             onChange={this.onChangeIngredient} 
             onAdd={this.onAddIngredient} 
             onRemove={this.onRemoveIngredient}/>
