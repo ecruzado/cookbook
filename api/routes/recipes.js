@@ -95,7 +95,85 @@ let post = async (req, res) => {
     });
 };
 
+let put = async (req, res) => { 
 
+    let recipeUpdate = req.body;
+    let ingredientsInsert ;
+    let recipeid = req.params.id;
+    if (req.body.ingredients)
+        ingredientsInsert = [...req.body.ingredients];
+    
+    console.log(req.params.id);
+    console.log(recipeUpdate);
+    console.log(ingredientsInsert);
+
+    delete recipeUpdate.ingredients;
+    delete recipeUpdate.id;
+
+    console.log("from api");
+    //sleep.sleep(3);
+
+    cnn.transaction(async (trx) => {
+        try {
+            await trx.from('recipe')
+                .where('id',recipeid)
+                .update(recipeUpdate);
+
+            console.log("1");
+
+            await trx.from('ingredient')
+                .where({recipeid: recipeid})
+                .del();
+            
+            console.log("2");
+
+            if(ingredientsInsert){
+                ingredientsInsert = ingredientsInsert.map(x=>{
+                    x.recipeid = req.params.id
+                    delete x.id;
+                    return x;
+                });
+
+                await trx('ingredient').insert(ingredientsInsert);
+            
+            }            
+            await trx.commit();
+            
+            res.json({
+                message: 'success'
+            });
+
+        } catch(error) {
+            await trx.rollback();
+            console.log(error);
+            res.json({message: error});
+        }
+    });
+};
+
+let deleteRecipe = async (req, res) => {
+    const recipeId = req.params.id;
+    cnn.transaction(async (trx) => {
+        try {
+            await trx.from('ingredient')
+                .where({recipeid: recipeId})
+                .del();
+
+            await trx.from('recipe')
+                .where({id: recipeId})
+                .del(); 
+
+            await trx.commit();
+
+            res.json({
+                message: 'success'
+            });
+        } catch(error) {
+            await trx.rollback();
+            res.json({message: error});
+        }
+    });
+};
 
 let router = express.Router();
 
@@ -104,7 +182,9 @@ router.route('/')
     .post(post);
 
 router.route('/:id')
-    .get(getById);
+    .get(getById)
+    .put(put)
+    .delete(deleteRecipe);
 
 
 export default router;

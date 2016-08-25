@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setCurrentRecipeId, loadRecipe} from '../../actions/recipeActions';
+import { setCurrentRecipeId, loadRecipe, deleteRecipe} from '../../actions/recipeActions';
 import RecipeList from './RecipeList';
 
 const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
@@ -26,9 +26,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeClick: (id) => {
-      console.load('onRecipeClick');
-      loadRecipe(id);
-      dispatch(setCurrentRecipeId(id));
+      //console.log('onRecipeClick '+id);
+      dispatch(deleteRecipe(id));
     }
   };
 };

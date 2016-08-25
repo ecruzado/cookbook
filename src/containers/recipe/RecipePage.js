@@ -22,7 +22,13 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeSave: (recipe) => {
-      dispatch(saveRecipe(recipe));
+      if(recipe.id && recipe.id != 0){
+        console.log('upd');
+        dispatch(updateRecipe(recipe));
+      }else{
+        console.log('sav');
+        dispatch(saveRecipe(recipe));
+      }
       // .then(()=>{
       //   toastr.success("success")
       // }));

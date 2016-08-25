@@ -9,9 +9,9 @@ export const createRecipe = (recipe) => {
     return {type: types.CREATE_RECIPE, recipe};    
 };
 
-export const updateRecipe = (recipe) => {
-    return {type: types.UPDATE_RECIPE, recipe};
-};
+// export const updateRecipe = (recipe) => {
+//     return {type: types.UPDATE_RECIPE, recipe};
+// };
 
 export const setCategoryFilter = (category) => {
     return {type: types.SET_CATEGORY_FILTER, category}
@@ -31,10 +31,6 @@ export const setNameFilter = (name) => {
 
 export const loadRecipesSuccess = (recipes) => {
     return {type: types.LOAD_RECIPES_SUCCESS, recipes}
-};
-
-export const updateRecipeSuccess = (recipe) => {
-    return {type: types.UPDATE_RECIPE_SUCCESS, recipe}
 };
 
 
@@ -62,6 +58,28 @@ export const createRecipeError = (error) => {
 };
 
 
+export const updatRecipeRequest = () => {
+    return {type: types.UPDATE_RECIPE_REQUEST}
+};
+export const updateRecipeSuccess = (recipe) => {
+    return {type: types.UPDATE_RECIPE_SUCCESS, recipe}
+};
+export const updateRecipeError = (error) => {
+    return {type: types.UPDATE_RECIPE_ERROR, error}
+};
+
+
+export const deleteRecipeRequest = () => {
+    return {type: types.DELETE_RECIPE_REQUEST}
+};
+export const deleteRecipeSuccess = (recipe) => {
+    return {type: types.DELETE_RECIPE_SUCCESS, recipe}
+};
+export const deleteRecipeError = (error) => {
+    return {type: types.DELETE_RECIPE_ERROR, error}
+};
+
+
 export const loadRecipes = () => {
     return function(dispatch){
         recipeApiClient.getAllRecipes().end((err, res)=>{
@@ -71,24 +89,6 @@ export const loadRecipes = () => {
         }); 
     }
 };
-
-export const saveRecipe = (recipe) => {
-    console.log('saveRecipe action: ');
-    console.log(recipe);
-    return function(dispatch){
-        dispatch(createRecipeRequest());
-        
-        recipeApiClient.postRecipe(recipe).end((err, res)=>{
-            if(!err){
-                dispatch(createRecipeSuccess(res.body));
-            }else{
-                toastr.error(err);
-                dispatch(createRecipeError(err));
-            }
-        });
-    }
-};
-
 
 export const loadRecipe = (id) => {
     return function(dispatch){
@@ -109,3 +109,55 @@ export const loadRecipe = (id) => {
         }
     }
 };
+
+export const saveRecipe = (recipe) => {
+    console.log('saveRecipe action: ');
+    console.log(recipe);
+    return function(dispatch){
+        dispatch(createRecipeRequest());
+        
+        recipeApiClient.postRecipe(recipe).end((err, res)=>{
+            if(!err){
+                dispatch(createRecipeSuccess(res.body));
+            }else{
+                toastr.error(err);
+                dispatch(createRecipeError(err));
+            }
+        });
+    }
+};
+
+export const updateRecipe = (recipe) => {
+    console.log('updateRecipe action: ');
+    console.log(recipe);
+    return function(dispatch){
+        dispatch(updatRecipeRequest());
+        
+        recipeApiClient.putRecipe(recipe).end((err, res)=>{
+            if(!err){
+                dispatch(updateRecipeSuccess(res.body));
+            }else{
+                toastr.error(err);
+                dispatch(updateRecipeError(err));
+            }
+        });
+    }
+};
+
+export const deleteRecipe = (id) => {
+    console.log('deleteRecipe action: ');
+    console.log(id);
+    return function(dispatch){
+        dispatch(deleteRecipeRequest());
+        
+        recipeApiClient.deleteRecipe(id).end((err, res)=>{
+            if(!err){
+                dispatch(deleteRecipeSuccess(res.body));
+            }else{
+                toastr.error(err);
+                dispatch(deleteRecipeError(err));
+            }
+        });
+    }
+};
+

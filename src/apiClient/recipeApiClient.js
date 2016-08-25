@@ -21,6 +21,19 @@ class RecipeApiClient {
         return req;
     }
 
+    static putRecipe(recipe){
+        const req = superagent['put']('http://localhost:8888/recipes/'+recipe.id)
+            .timeout(6000)
+            .set('Content-Type', 'application/json')
+            .send(recipe);
+        return req;
+    }    
+
+    static deleteRecipe(id){
+        const req = superagent['delete']('http://localhost:8888/recipes/'+id)
+            .timeout(6000);
+        return req;
+    }    
 
 }
 
