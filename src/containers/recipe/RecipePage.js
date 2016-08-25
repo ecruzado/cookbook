@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe} from '../../actions/recipeActions';
+import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe, loadRecipes} from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
 
@@ -13,7 +13,10 @@ const getRecipe = (recipes, recipeId = 0) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    recipe: state.recipe
+    recipe: state.recipe.recipe,
+    isLoading: state.recipe.isLoading,
+    isSaving: state.recipe.isSaving,
+    error: state.recipe.error
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,6 +29,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onLoadRecipe: (id) =>{
       dispatch(loadRecipe(id));
+    },
+    onLoadRecipes: () =>{
+      dispatch(loadRecipes());
     }
   };
 };

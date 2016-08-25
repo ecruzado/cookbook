@@ -31,13 +31,7 @@ class RecipeList extends React.Component {
 }
 
 RecipeList.propTypes = {
-  recipes: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    chef: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    preparation: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  recipes: PropTypes.array.isRequired,
   onRecipeClick: PropTypes.func.isRequired
 };
 

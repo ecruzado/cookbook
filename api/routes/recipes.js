@@ -1,6 +1,7 @@
 import express from 'express';
 import knex from 'knex';
 import bodyParser from 'body-parser';
+import sleep from 'sleep';
 
 let cnn = knex({
     client: 'pg',
@@ -14,7 +15,10 @@ let cnn = knex({
 });
 
 let list =  async (req, res) => {
-    let query = await cnn.from('recipe').select();
+    let query = await cnn.from('recipe')
+        .orderByRaw('id DESC')
+        //.limit(50)
+        .select();
     res.json(query);
 };
 
@@ -24,6 +28,7 @@ let getById =  async (req, res) => {
         .where('recipe.id', req.params.id)
         .select('recipe.*','ingredient.id as ingredientId',
             'ingredient.name as ingredientName','ingredient.quantity');
+    sleep.sleep(1);
     if(query){
         let recipe = {
             id: query[0].id,
@@ -56,6 +61,7 @@ let post = async (req, res) => {
     delete recipeInsert.ingredients;
     delete recipeInsert.id;
     console.log("from api");
+    //sleep.sleep(3);
 
     cnn.transaction(async (trx) => {
         try {

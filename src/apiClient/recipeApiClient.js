@@ -2,27 +2,23 @@ import superagent from 'superagent';
 
 class RecipeApiClient {
     static getAllRecipes(){
-        return superagent('GET','http://localhost:8888/recipes');
+        const req = superagent['get']('http://localhost:8888/recipes')
+            .timeout(1000);
+        return req;
     }
 
     static getRecipe(id){
-        return superagent('GET','http://localhost:8888/recipes/'+id);
+        const req = superagent['get']('http://localhost:8888/recipes/'+id)
+            .timeout(4000);
+        return req;
     }
 
     static postRecipe(recipe){
-        console.log("superagent post");        
-        console.log(recipe);
-        superagent
-            .post('http://localhost:8888/recipes')
+        const req = superagent['post']('http://localhost:8888/recipes')
+            .timeout(6000)
             .set('Content-Type', 'application/json')
-            .send(recipe)
-            .end(function(err, res){
-                debugger;
-                console.log('test');
-                if(err){
-                    console.log(err);
-                }
-            });
+            .send(recipe);
+        return req;
     }
 
 

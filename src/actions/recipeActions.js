@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import recipeApi from '../api/mockRecipeApi';
 import recipeApiClient from '../apiClient/recipeApiClient';
+import toastr from 'toastr';
 
 let nextRecipeId = 50;
 export const createRecipe = (recipe) => {
@@ -32,62 +33,74 @@ export const loadRecipesSuccess = (recipes) => {
     return {type: types.LOAD_RECIPES_SUCCESS, recipes}
 };
 
-export const createRecipeSuccess = (recipe) => {
-    return {type: types.CREATE_RECIPE_SUCCESS, recipe}
-};
-
 export const updateRecipeSuccess = (recipe) => {
     return {type: types.UPDATE_RECIPE_SUCCESS, recipe}
 };
 
+
+export const loadRecipeRequest = () => {
+    //console.log('loadRecipeRequest action: ');
+    return {type: types.LOAD_RECIPE_REQUEST}
+};
 export const loadRecipeSuccess = (recipe) => {
+    //console.log('loadRecipeSuccess action: ');
     return {type: types.LOAD_RECIPE_SUCCESS, recipe}
+};
+export const loadRecipeError = (error) => {
+    //console.log('loadRecipeError action: ');
+    return {type: types.LOAD_RECIPE_ERROR, error}
+};
+
+export const createRecipeRequest = () => {
+    return {type: types.CREATE_RECIPE_REQUEST}
+};
+export const createRecipeSuccess = (recipe) => {
+    return {type: types.CREATE_RECIPE_SUCCESS, recipe}
+};
+export const createRecipeError = (error) => {
+    return {type: types.CREATE_RECIPE_ERROR, error}
 };
 
 
 export const loadRecipes = () => {
     return function(dispatch){
         recipeApiClient.getAllRecipes().end((err, res)=>{
+            // console.log("ajax call");
+            // console.log(res.body);
             dispatch(loadRecipesSuccess(res.body));
         }); 
-        // return recipeApiClient.getAllRecipes().then(recipes=>{
-        //     console.log(recipes);
-        //     dispatch(loadRecipesSuccess(recipes));
-        // }).catch(error=>{
-        //     console.log('error');
-        //     throw error;
-        // });
     }
 };
 
 export const saveRecipe = (recipe) => {
-    // return function(dispatch){
-    //     return recipeApi.saveRecipe(recipe).then(savedRecipe =>{
-    //         recipe.id? dispatch(updateRecipeSuccess(savedRecipe)) :
-    //             dispatch(createRecipeSuccess(savedRecipe));
-    //     });
-    // }
     console.log('saveRecipe action: ');
     console.log(recipe);
-    console.log(JSON.stringify(recipe));
-    recipeApiClient.postRecipe(recipe);
-    
-    // return function(dispatch){
-    //     recipeApiClient.postRecipe(recipe);
-    //     // recipeApiClient.postRecipe(recipe).end((err, res)=>{
-    //     //     console.log('postRecipe call completed');
-    //     //     //dispatch(loadRecipeSuccess(res.body));
-    //     // });
-    // }    
+    return function(dispatch){
+        dispatch(createRecipeRequest());
+        
+        recipeApiClient.postRecipe(recipe).end((err, res)=>{
+            if(!err){
+                dispatch(createRecipeSuccess(res.body));
+            }else{
+                toastr.error(err);
+                dispatch(createRecipeError(err));
+            }
+        });
+    }
 };
 
 
 export const loadRecipe = (id) => {
     return function(dispatch){
+        dispatch(loadRecipeRequest());
         if(id && id != 0){
             recipeApiClient.getRecipe(id).end((err, res)=>{
-                console.log('get Recipe call completed');
-                dispatch(loadRecipeSuccess(res.body));
+                if(!err){
+                    dispatch(loadRecipeSuccess(res.body));
+                }else{
+                    toastr.error(err);
+                    dispatch(loadRecipeError(err));
+                }
             });         
         }else{
             let recipe = {};
