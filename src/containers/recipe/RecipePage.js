@@ -19,11 +19,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeSave: (recipe) => {
-      // if(recipe.id && recipe.id !== 0){
-      //   dispatch(updateRecipe(recipe));
-      // }else{
-      //   dispatch(createRecipe(recipe));
-      // }
       dispatch(saveRecipe(recipe));
       // .then(()=>{
       //   toastr.success("success")

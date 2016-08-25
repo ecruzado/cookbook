@@ -7,13 +7,11 @@ class RecipeForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      //ingredients : this.props.recipe.ingredients?this.props.recipe.ingredients:[]
       recipe : this.props.recipe
     };
     this.onAddIngredient = this.onAddIngredient.bind(this);
     this.onRemoveIngredient = this.onRemoveIngredient.bind(this);
     this.onChangeIngredient = this.onChangeIngredient.bind(this);
-    
   }
 
   onAddIngredient(ingredient){
@@ -52,7 +50,6 @@ class RecipeForm extends React.Component {
     });
   }
 
-
   componentWillReceiveProps(nextProps) {
       if (this.props.recipe !== nextProps.recipe) {
           this.setState({ recipe: Object.assign({}, nextProps.recipe) });
@@ -62,7 +59,6 @@ class RecipeForm extends React.Component {
   componentDidMount(){
     this.props.onLoadRecipe(this.props.params.id);
   }
-
 
   render(){
     console.log(+ new Date());

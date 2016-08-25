@@ -22,7 +22,8 @@ let getById =  async (req, res) => {
     let query = await cnn.from('recipe')
         .innerJoin('ingredient','recipe.id','ingredient.recipeid')
         .where('recipe.id', req.params.id)
-        .select('recipe.*','ingredient.id as ingredientId','ingredient.name as ingredientName','ingredient.quantity');
+        .select('recipe.*','ingredient.id as ingredientId',
+            'ingredient.name as ingredientName','ingredient.quantity');
     if(query){
         let recipe = {
             id: query[0].id,
@@ -42,7 +43,8 @@ let getById =  async (req, res) => {
     }
 };
 
-let post = async (req, res) => {
+let post = async (req, res) => { 
+
     let recipeInsert = req.body;
     let ingredientsInsert ;
     if (req.body.ingredients)
@@ -55,23 +57,36 @@ let post = async (req, res) => {
     delete recipeInsert.id;
     console.log("from api");
 
-    let ids = await cnn('recipe')
-        .insert(recipeInsert)
-        .returning("id");
-    console.log(ids);
-    
-    if(ingredientsInsert){
-        ingredientsInsert = ingredientsInsert.map(x=>{
-            x.recipeid = ids[0];
-            delete x.id;
-            return x;
-        });
+    cnn.transaction(async (trx) => {
+        try {
+            let ids = await trx('recipe')
+                .insert(recipeInsert)
+                .returning("id");
+            //console.log(ids);
 
-        let query2 = await cnn('ingredient')
-            .insert(ingredientsInsert);    
-    }
-        
-    res.json("ok");
+            if(ingredientsInsert){
+                ingredientsInsert = ingredientsInsert.map(x=>{
+                    x.recipeid = ids[0];
+                    delete x.id;
+                    return x;
+                });
+
+                await trx('ingredient').insert(ingredientsInsert);
+            
+            }            
+            await trx.commit();
+            
+            recipe.id = id[0];
+            res.json({
+                message: 'success',
+                data: recipe
+            });
+
+        } catch(error) {
+            await trx.rollback();
+            res.json({message: error});
+        }
+    });
 };
 
 
