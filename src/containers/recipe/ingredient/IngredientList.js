@@ -7,7 +7,9 @@ const IngredientList = ({list, onAdd, onRemove, onChange})=> {
         <table className="responsive-table">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Ingredient</th>
+                    <th></th>
                     <th>Quantity</th>
                     <th></th>
                 </tr>
@@ -21,7 +23,13 @@ const IngredientList = ({list, onAdd, onRemove, onChange})=> {
                 )}
                 <tr>
                     <td>
+                        <i className="material-icons prefix">trending_flat</i>  
+                    </td>
+                    <td>
                         <input type="text" ref={node => {inputIngredient = node}} />
+                    </td>
+                    <td>
+                        <i className="material-icons prefix">play_for_work</i>  
                     </td>
                     <td>
                         <input type="text" ref={node => {inputQuanity = node}} />

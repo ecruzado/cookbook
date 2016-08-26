@@ -19,7 +19,7 @@ export default class Header extends React.Component {
             <header>
                 <nav className="top-nav light-green">
                     <div className="nav-wrapper container">
-                        <a href="#" className="brand-logo">COOKBOOK</a>
+                        <Link to="/" className="brand-logo">COOKBOOK</Link>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
                                 <input id="search" type="search" placeholder="Recipe Name" 

@@ -3,7 +3,12 @@ import * as types from '../actions/actionTypes';
 const initialState = {
     isLoading: false,
     isSaving: false,
-    recipe: null,
+    recipe: {
+        name:'',
+        chef:'',
+        category:'',
+        preparation:''
+    },
     error: ''
 };
 
@@ -16,7 +21,12 @@ export default function recipeReducer(state = initialState, action){
             return {
                 ...state,
                 isLoading: true,
-                recipe: null
+                recipe: {
+                    name:'',
+                    chef:'',
+                    category:'',
+                    preparation:''
+                }
             };
         case types.LOAD_RECIPE_SUCCESS:
             return {

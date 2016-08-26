@@ -6,3 +6,10 @@
     float: right;
 }
 
+.card-action .material-icons{
+    font-size: 15px;
+}
+
+.recipe-button{
+    margin-left: 10px;
+}

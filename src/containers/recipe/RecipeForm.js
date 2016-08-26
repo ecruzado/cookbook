@@ -1,205 +1,64 @@
 import React, { PropTypes } from 'react';
 import IngredientList from './ingredient/IngredientList';
-import { setCurrentRecipeId, loadRecipe, saveRecipe, loadRecipes} from '../../actions/recipeActions';
-import toastr from 'toastr';
+import {Link, IndexLink } from 'react-router';
 
-class RecipeForm extends React.Component {
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      recipe : this.props.recipe
-    };
-    this.onAddIngredient = this.onAddIngredient.bind(this);
-    this.onRemoveIngredient = this.onRemoveIngredient.bind(this);
-    this.onChangeIngredient = this.onChangeIngredient.bind(this);
-    this.redirect = this.redirect.bind(this);
-  }
-
-  onAddIngredient(ingredient){
-    let lastId = 1;
-    if(this.state.recipe.ingredients.length > 0){
-      lastId = this.state.recipe.ingredients[this.state.recipe.ingredients.length - 1].id;
-    }
-    ingredient.id = lastId + 1;
-    let tempRecipe = this.state.recipe;
-    tempRecipe.ingredients = [...this.state.recipe.ingredients, ingredient];
-    this.setState({
-      recipe: tempRecipe
-    });
-  }
-
-  onChangeIngredient(ingredient){
-    let indexIng = this.state.recipe.ingredients.findIndex(item => item.id == ingredient.id);
-    let tempRecipe = this.state.recipe;
-    tempRecipe.ingredients = this.state.recipe.ingredients.map((item, index)=>{
-      if(index === indexIng){
-        return Object.assign({}, ingredient);
-      }
-      return item;
-    });
-
-    this.setState({
-      recipe: tempRecipe
-    });
-  }
-
-  onRemoveIngredient(id){
-    let tempRecipe = this.state.recipe;
-    tempRecipe.ingredients = this.state.recipe.ingredients.filter((x,i)=> x.id!== id);
-    this.setState({
-      recipe: tempRecipe
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-      if (this.props.recipe !== nextProps.recipe) {
-          this.setState({ recipe: Object.assign({}, nextProps.recipe) });
-      }
-    }
-
-  componentDidMount(){
-    this.props.onLoadRecipe(this.props.params.id);
-  }
-
-  redirect() {
-    this.props.onLoadRecipes();
-    this.context.router.push('/');
-  }
-
-  render(){
-    console.log(+ new Date());
-    let inputName, inputChef, inputPreparation, selectCategory;
-    
-    let classButton = "waves-effect waves-light btn ";
-    if(this.props.error ||
-      this.props.isLoading || 
-      this.props.isSaving){
-      classButton += "disabled"
-    }
-
-    let textButton = "SAVE RECIPE";
-    if(this.props.isLoading){
-      textButton = "Loading...";
-    }
-    if(this.props.isSaving){
-      textButton = "Saving...";
-    }
-
-    let preloader;
-    if(this.props.isLoading){
-      preloader = (
-        <div className="progress">
-            <div className="indeterminate"></div>
-        </div>        
-      );
-    }
-
-    return (
-      <div className="container">
-        {preloader}
-        <div className="row">
-          <h3 class="header">Recipe</h3>
-          <form className="col s12" onSubmit={e => {
-            e.preventDefault();
-            if (!inputName.value.trim() 
-              || !inputChef.value.trim()
-              || !inputPreparation.value.trim()
-            ) {
-              return;
-            }
-
-            this.props.onRecipeSave({
-              id: this.props.recipe.id? this.props.recipe.id : 0,
-              name: inputName.value, 
-              chef: inputChef.value, 
-              category: selectCategory.value, 
-              preparation: inputPreparation.value,
-              ingredients: this.state.recipe.ingredients
-            });
-            // inputName.value = ''
-            // inputChef.value = ''
-            // selectCategory.value = ''
-            // inputPreparation.value = ''
-          }}>
-        
-            <div class="row">
-              <div class="input-field col s12">
-                <input ref={node => {
-                  inputName = node;
-                  if(inputName && this.props.recipe && this.props.recipe.name){
-                    inputName.value = this.props.recipe.name;
-                  }
-                }} />
-                <label for="name">Name</label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s12">
-                <input ref={node => {
-                  inputChef = node
-                  if(inputChef && this.props.recipe && this.props.recipe.chef){
-                    inputChef.value = this.props.recipe.chef;
-                  }
-                }} />
-                <label for="name">Chef</label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s12">
-                <select ref={node => {
-                  selectCategory = node
-                  if(selectCategory && this.props.recipe && this.props.recipe.category){
-                    selectCategory.value = this.props.recipe.category;
-                  }              
-                }}>
-                  <option value="">Choose your category</option>
-                  <option value="PASTAS">PASTAS</option>
-                  <option value="SALADS">SALADS</option>
-                  <option value="MEAT">MEAT</option>
-                  <option value="DESSERTS">DESSERTS</option>
-                </select>
-                <label>Categoria</label>
-              </div>
-            </div>        
-
-            <div class="row">
-              <div class="input-field col s12">
-                <textarea className="materialize-textarea" rows="10" ref={node => {
-                  inputPreparation = node
-                  if(inputPreparation && this.props.recipe && this.props.recipe.preparation){
-                    inputPreparation.value = this.props.recipe.preparation;
-                  }              
-                }}/>          
-                <label for="name">Preparation</label>
-              </div>
-            </div>
-            
-            <IngredientList 
-              list={this.state.recipe && this.state.recipe.ingredients} 
-              onChange={this.onChangeIngredient} 
-              onAdd={this.onAddIngredient} 
-              onRemove={this.onRemoveIngredient}/>
-          
-            <button type="submit" className={classButton}>
-              {textButton}
-            </button>
-
-            <button type="button" className={classButton} onClick={this.redirect}>
-              Cancel
-            </button>            
-          </form>
-
+export const RecipeForm = ({recipe,onChange,onSubmit,classButton,textButton,
+  onChangeIngredient,onAddIngredient,onRemoveIngredient}) => {
+  return(
+    <form className="col s12" onSubmit={onSubmit}>
+      <div className="row">
+        <div className="input-field col s12">
+          <i className="material-icons prefix">mode_edit</i>
+          <input name="name" value={recipe && recipe.name} 
+            onChange={onChange} />
+          <label className="active" for="name">Name</label>
         </div>
       </div>
-    );
-  }
-}
-
-RecipeForm.contextTypes = {
-  router: PropTypes.object
+      <div className="row">
+        <div className="input-field col s12">
+          <i className="material-icons prefix">account_circle</i>
+          <input name="chef"  value={recipe && recipe.chef}  
+            onChange={onChange} />
+          <label className="active" for="chef">Chef</label>
+        </div>
+      </div>
+      <div className="row">
+        <div className="input-field col s12">
+          <i className="material-icons prefix">label</i>
+          <select name="category" value={recipe && recipe.category}  
+            onChange={onChange} >
+            <option value="">Choose your category</option>
+            <option value="PASTAS">PASTAS</option>
+            <option value="SALADS">SALADS</option>
+            <option value="MEAT">MEAT</option>
+            <option value="DESSERTS">DESSERTS</option>
+          </select>
+          <label className="active" for="category">Categoria</label>
+        </div>
+      </div>        
+      <div className="row">
+        <div className="input-field col s12">
+          <i className="material-icons prefix">list</i>
+          <textarea name="preparation" className="materialize-textarea" rows="10" 
+            value={recipe && recipe.preparation}  onChange={onChange} />          
+          <label className="active" for="preparation">Preparation</label>
+        </div>
+      </div>
+      <IngredientList 
+        list={recipe && recipe.ingredients} 
+        onChange={onChangeIngredient} 
+        onAdd={onAddIngredient} 
+        onRemove={onRemoveIngredient}/>
+      <div className="row right-align">
+        <button type="submit" className={classButton}>
+          <i className="material-icons left">done</i>
+          {textButton}
+        </button>
+        <Link to="/" className="waves-effect waves-light btn-large recipe-button">
+          <i className="material-icons left">settings_backup_restore</i>
+          Cancel      
+        </Link>
+      </div>
+    </form>
+  )
 };
-
-export default RecipeForm;

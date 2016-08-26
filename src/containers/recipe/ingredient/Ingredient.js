@@ -6,6 +6,9 @@ const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
     return (
         <tr>
             <td>
+                <i className="material-icons prefix">trending_flat</i>  
+            </td>
+            <td>
                 <input placeholder="Name:" ref={c => {
                     inputName = c;
                     if(inputName && name){
@@ -16,6 +19,9 @@ const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
                         onChange({id,name:inputName.value, quantity: inputQuantity.value})}
                     }
                 }/>
+            </td>
+            <td>
+                <i className="material-icons prefix">play_for_work</i>  
             </td>
             <td>
                 <input placeholder="Quantity:" ref={c=> {

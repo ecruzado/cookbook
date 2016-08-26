@@ -28,7 +28,7 @@ let getById =  async (req, res) => {
         .where('recipe.id', req.params.id)
         .select('recipe.*','ingredient.id as ingredientId',
             'ingredient.name as ingredientName','ingredient.quantity');
-    sleep.sleep(1);
+    //sleep.sleep(1);
     if(query){
         let recipe = {
             id: query[0].id,

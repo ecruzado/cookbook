@@ -103,7 +103,12 @@ export const loadRecipe = (id) => {
                 }
             });         
         }else{
-            let recipe = {};
+            let recipe = {
+                name:'',
+                chef:'',
+                category:'',
+                preparation:''
+            };
             recipe.ingredients = [];
             dispatch(loadRecipeSuccess(recipe));
         }
