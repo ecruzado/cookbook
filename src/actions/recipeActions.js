@@ -4,14 +4,14 @@ import recipeApiClient from '../apiClient/recipeApiClient';
 import toastr from 'toastr';
 
 let nextRecipeId = 50;
+
 export const createRecipe = (recipe) => {
-    Object.assign(recipe, {id: nextRecipeId++});
     return {type: types.CREATE_RECIPE, recipe};    
 };
 
-// export const updateRecipe = (recipe) => {
-//     return {type: types.UPDATE_RECIPE, recipe};
-// };
+export const updateRecipes = (recipe) => {
+    return {type: types.UPDATE_RECIPE, recipe};
+};
 
 export const setCategoryFilter = (category) => {
     return {type: types.SET_CATEGORY_FILTER, category}
@@ -98,6 +98,7 @@ export const loadRecipe = (id) => {
                 if(!err){
                     dispatch(loadRecipeSuccess(res.body));
                 }else{
+                    console.log(err);
                     toastr.error(err);
                     dispatch(loadRecipeError(err));
                 }
@@ -123,7 +124,15 @@ export const saveRecipe = (recipe) => {
         
         recipeApiClient.postRecipe(recipe).end((err, res)=>{
             if(!err){
-                dispatch(createRecipeSuccess(res.body));
+                if(res.statusCode === 200
+                    && res.body.message === "success"){
+                    toastr.success("Saved!");
+                    console.log(res.body);
+                    dispatch(createRecipeSuccess(res.body.data));
+                    dispatch(createRecipe(res.body.data));
+                }else{
+                    toastr.error("Error: "+res.body.message);
+                }
             }else{
                 toastr.error(err);
                 dispatch(createRecipeError(err));
@@ -140,7 +149,16 @@ export const updateRecipe = (recipe) => {
         
         recipeApiClient.putRecipe(recipe).end((err, res)=>{
             if(!err){
-                dispatch(updateRecipeSuccess(res.body));
+                if(res.statusCode === 200
+                    && res.body.message === "success"){
+                    toastr.success("Updated!");
+                    console.log(res.body);
+                    dispatch(updateRecipeSuccess(res.body.data));
+                    dispatch(updateRecipes(res.body.data));
+                }else{
+                    toastr.error("Error: "+res.body.message);
+                }                
+                
             }else{
                 toastr.error(err);
                 dispatch(updateRecipeError(err));

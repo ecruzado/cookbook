@@ -39,23 +39,23 @@ export default class RecipePage extends React.Component {
     };
 
   }
+  
+  componentDidMount(){
+    this.props.onLoadRecipe(this.props.params.id);
+    this.materializeJs();
+  }
 
   componentWillReceiveProps(nextProps) {
       if (this.props.recipe !== nextProps.recipe) {
           this.setState({ recipe: Object.assign({}, nextProps.recipe) });
       }
-    }
-
-  componentDidMount(){
-    this.props.onLoadRecipe(this.props.params.id);
-    this.applyBehaviours();
   }
 
   componentDidUpdate() {
-    this.applyBehaviours();
+    this.materializeJs();
   }
 
-  applyBehaviours() {
+  materializeJs() {
     $('select').material_select(this.updateRecipeState);
   }
 
@@ -126,6 +126,7 @@ export default class RecipePage extends React.Component {
   saveRecipe(event) {
     event.preventDefault();
     let recipe = Object.assign({}, this.state.recipe);
+    console.log(recipe);
     this.props.onRecipeSave(recipe);
   }
 

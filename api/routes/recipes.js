@@ -28,7 +28,7 @@ let getById =  async (req, res) => {
         .where('recipe.id', req.params.id)
         .select('recipe.*','ingredient.id as ingredientId',
             'ingredient.name as ingredientName','ingredient.quantity');
-    //sleep.sleep(1);
+    sleep.sleep(1);
     if(query){
         let recipe = {
             id: query[0].id,
@@ -56,36 +56,44 @@ let post = async (req, res) => {
         ingredientsInsert = [...req.body.ingredients];
     
     console.log(recipeInsert);
-    console.log(ingredientsInsert);
+    //console.log(ingredientsInsert);
 
     delete recipeInsert.ingredients;
     delete recipeInsert.id;
-    console.log("from api");
-    //sleep.sleep(3);
+
+    sleep.sleep(2);
 
     cnn.transaction(async (trx) => {
         try {
             let ids = await trx('recipe')
                 .insert(recipeInsert)
                 .returning("id");
-            //console.log(ids);
 
             if(ingredientsInsert){
+                recipeInsert.id = ids[0];
                 ingredientsInsert = ingredientsInsert.map(x=>{
                     x.recipeid = ids[0];
                     delete x.id;
                     return x;
                 });
 
-                await trx('ingredient').insert(ingredientsInsert);
+                let detIds = await trx('ingredient')
+                    .insert(ingredientsInsert)
+                    .returning("id");
+
+                ingredientsInsert = ingredientsInsert.map((x, i)=>{
+                    x.id = detIds[i];
+                    return x;
+                });
+
+                recipeInsert.ingredients = ingredientsInsert;
             
             }            
             await trx.commit();
             
-            recipe.id = id[0];
             res.json({
                 message: 'success',
-                data: recipe
+                data: recipeInsert
             });
 
         } catch(error) {
@@ -120,6 +128,7 @@ let put = async (req, res) => {
                 .update(recipeUpdate);
 
             console.log("1");
+            recipeUpdate.id = recipeid;
 
             await trx.from('ingredient')
                 .where({recipeid: recipeid})
@@ -134,13 +143,23 @@ let put = async (req, res) => {
                     return x;
                 });
 
-                await trx('ingredient').insert(ingredientsInsert);
+                let detIds = await trx('ingredient')
+                    .insert(ingredientsInsert)
+                    .returning('id');
+
+                ingredientsInsert = ingredientsInsert.map((x, i)=>{
+                    x.id = detIds[i];
+                    return x;
+                });
+
+                recipeUpdate.ingredients = ingredientsInsert;                    
             
             }            
             await trx.commit();
             
             res.json({
-                message: 'success'
+                message: 'success',
+                data: recipeUpdate
             });
 
         } catch(error) {

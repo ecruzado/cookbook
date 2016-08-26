@@ -12,7 +12,7 @@ const RecipeCard = ({ onClick, id, name, chef, category, preparation }) => (
             <i className="material-icons">label_outline</i>{category}
             <span> | </span>
             <i className="material-icons">person_pin</i>{chef}
-            <a href="javascript:void(0) "className="right" onClick={onClick}>Delete</a>
+            <a href="javascript:void(0)"className="right" onClick={onClick}>Delete</a>
             <Link className="right" to={"/recipe/" + id}>Edit</Link>
         </div>        
     </div>

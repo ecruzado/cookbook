@@ -26,7 +26,7 @@ export default class Header extends React.Component {
                                     onKeyPress={this.props.onNameSearch}/>
                             </li>
                             <li>
-                                <a href="sass.html"><i className="material-icons">search</i></a>
+                                <a href="javascript:void(0)"><i className="material-icons">search</i></a>
                             </li> 
                         </ul>                   
                     </div>

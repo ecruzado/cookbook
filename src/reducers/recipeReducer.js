@@ -40,16 +40,20 @@ export default function recipeReducer(state = initialState, action){
                 isLoading: false,
                 error: action.error
             };
+        case types.UPDATE_RECIPE_REQUEST:
         case types.CREATE_RECIPE_REQUEST:
             return {
                 ...state,
                 isSaving: true
             };
+        case types.UPDATE_RECIPE_SUCCESS:
         case types.CREATE_RECIPE_SUCCESS:
             return {
                 ...state,
-                isSaving: false
+                isSaving: false,
+                recipe: action.recipe
             };
+        case types.UPDATE_RECIPE_ERROR:
         case types.CREATE_RECIPE_ERROR:
             return {
                 ...state,
