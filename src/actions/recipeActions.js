@@ -13,6 +13,11 @@ export const updateRecipes = (recipe) => {
     return {type: types.UPDATE_RECIPE, recipe};
 };
 
+export const deleteRecipes = (id) => {
+    return {type: types.DELETE_RECIPE, id};
+};
+
+
 export const setCategoryFilter = (category) => {
     return {type: types.SET_CATEGORY_FILTER, category}
 };
@@ -176,6 +181,8 @@ export const deleteRecipe = (id) => {
         recipeApiClient.deleteRecipe(id).end((err, res)=>{
             if(!err){
                 dispatch(deleteRecipeSuccess(res.body));
+                dispatch(deleteRecipes(id));
+                toastr.success("Deleted!");
             }else{
                 toastr.error(err);
                 dispatch(deleteRecipeError(err));

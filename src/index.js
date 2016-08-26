@@ -9,7 +9,6 @@ import '../node_modules/materialize-css/dist/css/materialize.css';
 import '../node_modules/toastr/build/toastr.min.css';
 import './styles/styles.css';
 import $ from "jquery";
-import Materialize from 'materialize-css';
 import {loadRecipes} from  './actions/recipeActions';
 
 const store = configureStore();

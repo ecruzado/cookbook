@@ -2,6 +2,7 @@ import React, {PropTypes}  from 'react';
 import {connect} from 'react-redux';
 import Header from './Header';
 import Footer from './Footer';
+import materializecss from 'materialize-css';
 
 class App extends React.Component {
   render() {

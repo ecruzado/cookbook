@@ -26,7 +26,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onRecipeClick: (id) => {
-      //console.log('onRecipeClick '+id);
       dispatch(deleteRecipe(id));
     }
   };

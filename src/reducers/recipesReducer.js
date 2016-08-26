@@ -1,9 +1,9 @@
 import * as types from '../actions/actionTypes';
 
 export default function recipesReducer(state = [], action){
-    // console.log("recipesReducer: ");
-    // console.log(action);
-    // console.log(state);
+    //  console.log("recipesReducer: ");
+    //  console.log(action);
+    //  console.log(state);
     switch(action.type){
         case types.CREATE_RECIPE:
             return [
@@ -17,6 +17,9 @@ export default function recipesReducer(state = [], action){
                 }
                 return item;
             });             
+        case types.DELETE_RECIPE:
+            return state.filter((x,i)=> x.id!== action.id);             
+            
         case types.LOAD_RECIPES_SUCCESS:
             return action.recipes;                         
         default:
