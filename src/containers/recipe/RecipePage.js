@@ -4,6 +4,7 @@ import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe
 import toastr from 'toastr';
 import {RecipeForm} from './RecipeForm';
 import autobind from 'autobind-decorator';
+import {Rating} from '../../components/rating';
 
 @connect(
   (state, ownProps) => ({
@@ -130,8 +131,15 @@ export default class RecipePage extends React.Component {
     this.props.onRecipeSave(recipe);
   }
 
+  @autobind
+  onRate(rate) {
+    console.log(rate);
+  }
+
+
   render(){
     console.log(+ new Date());
+    console.log(this.state.recipe);
     
     let classButton = "waves-effect waves-light btn-large recipe-button ";
     if(this.props.error ||
@@ -162,6 +170,9 @@ export default class RecipePage extends React.Component {
         {preloader}
         <div className="row">
           <h3 class="header">Recipe</h3>
+          {this.state.recipe && this.state.recipe.rate &&
+            <Rating stars="5" rate={this.state.recipe.rate} allowClick={true} onRate={this.onRate}/>
+          }
           {this.state.recipe &&
             <RecipeForm
               recipe={this.state.recipe}

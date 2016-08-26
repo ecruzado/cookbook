@@ -10,15 +10,17 @@ let cnn = knex({
        "port": '1433',
        "user": 'postgres',
        "password": 'S1stem@s',
-       "database": 'coobook'
-    }    
+       "database": 'cookbookdb'
+    },
+    debug: true    
 });
 
 let list =  async (req, res) => {
     let query = await cnn.from('recipe')
         .orderByRaw('id DESC')
         //.limit(50)
-        .select();
+        .select('recipe.*',
+            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'));
     res.json(query);
 };
 
@@ -27,15 +29,17 @@ let getById =  async (req, res) => {
         .innerJoin('ingredient','recipe.id','ingredient.recipeid')
         .where('recipe.id', req.params.id)
         .select('recipe.*','ingredient.id as ingredientId',
-            'ingredient.name as ingredientName','ingredient.quantity');
-    sleep.sleep(1);
+            'ingredient.name as ingredientName','ingredient.quantity',
+            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'));
+    //sleep.sleep(1);
     if(query){
         let recipe = {
             id: query[0].id,
             name: query[0].name,
             category: query[0].category,
             chef: query[0].chef,
-            preparation: query[0].preparation
+            preparation: query[0].preparation,
+            rate: query[0].rate
         };
         recipe.ingredients = query.map(row=>({
             id: row.ingredientId,
