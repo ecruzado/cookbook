@@ -2,18 +2,9 @@ import express from 'express';
 import knex from 'knex';
 import bodyParser from 'body-parser';
 import sleep from 'sleep';
+import knexConfig from '../knexConfig';
 
-let cnn = knex({
-    client: 'pg',
-    connection: {
-       "host": 'localhost',
-       "port": '1433',
-       "user": 'postgres',
-       "password": 'S1stem@s',
-       "database": 'cookbookdb'
-    },
-    debug: true    
-});
+let cnn = knex(knexConfig);
 
 let list =  async (req, res) => {
     let query = await cnn.from('recipe')
