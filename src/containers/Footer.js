@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, IndexLink } from 'react-router';
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <footer className="page-footer grey darken-3">
             <div className="container">
@@ -27,5 +27,3 @@ const Footer = () => {
 
     );
 };
-
-export default Footer;

@@ -31,7 +31,7 @@ import {Rating} from '../../components/rating';
       }
   })  
 )
-export default class RecipePage extends React.Component {
+export class RecipePage extends React.Component {
   
   constructor(props){
     super(props);
@@ -191,7 +191,7 @@ export default class RecipePage extends React.Component {
   }
 }
 
-// RecipeForm.contextTypes = {
-//   router: PropTypes.object
-// };
+RecipeForm.contextTypes = {
+  router: PropTypes.object
+};
 

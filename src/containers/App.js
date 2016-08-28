@@ -1,10 +1,13 @@
 import React, {PropTypes}  from 'react';
 import {connect} from 'react-redux';
-import Header from './Header';
-import Footer from './Footer';
+import {Header} from './Header';
+import {Footer} from './Footer';
 import materializecss from 'materialize-css';
 
-class App extends React.Component {
+@connect(
+  (state, ownProps) => ({loading: state.ajaxCallsInProgress > 0})
+)
+export class App extends React.Component {
   render() {
     return (
       <div>
@@ -19,10 +22,5 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  children: PropTypes.object.isRequired
 };
-
-const mapStateToProps = (state, ownProps) => ({loading: state.ajaxCallsInProgress > 0});
-
-export default connect(mapStateToProps)(App);
