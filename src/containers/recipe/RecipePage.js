@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe, loadRecipes} from '../../actions/recipeActions';
+import { createRecipe, updateRecipe, setCurrentRecipeId , saveRecipe, loadRecipe, loadRecipes, saveRating} from '../../actions/recipeActions';
 import toastr from 'toastr';
 import {RecipeForm} from './RecipeForm';
 import autobind from 'autobind-decorator';
@@ -28,6 +28,9 @@ import {Rating} from '../../components/rating';
       },
       onLoadRecipes: () =>{
         dispatch(loadRecipes());
+      },
+      onSaveRating: (rating) =>{
+        dispatch(saveRating(rating));
       }
   })  
 )
@@ -133,7 +136,13 @@ export class RecipePage extends React.Component {
 
   @autobind
   onRate(rate) {
+    let rating = {
+      recipeid:this.state.recipe.id,
+      rate: rate,
+      username: +new Date()
+    };
     console.log(rate);
+    this.props.onSaveRating(rating);
   }
 
 
@@ -164,6 +173,8 @@ export class RecipePage extends React.Component {
         </div>        
       );
     }
+    let rateMessage = 'AVG: ' + this.props.recipe.rate + ' NUMBER: '+this.props.recipe.rateNumber;
+    
 
     return (
       <div className="container">
@@ -171,7 +182,11 @@ export class RecipePage extends React.Component {
         <div className="row">
           <h3 class="header">Recipe</h3>
           {this.state.recipe && this.state.recipe.rate &&
-            <Rating stars="5" rate={this.state.recipe.rate} allowClick={true} onRate={this.onRate}/>
+            <Rating stars="5" 
+              rate={this.state.recipe.rate}
+              message={rateMessage} 
+              allowClick={true} 
+              onRate={this.onRate}/>
           }
           {this.state.recipe &&
             <RecipeForm

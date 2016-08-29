@@ -5,7 +5,7 @@ export default {
       "port": '1433',
       "user": 'postgres',
       "password": 'S1stem@s',
-      "database": 'cookbookdb'
+      "database": 'db'
   },
-  debug: true   
+  debug: true
 };

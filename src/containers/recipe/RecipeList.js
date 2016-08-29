@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {deleteRecipe} from '../../actions/recipeActions';
 
 const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
+  console.log(recipes);
   switch (categoryFilter) {
     case 'SHOW_ALL':
       return recipes.filter(t => nameFilter==='' || t.name.indexOf(nameFilter) > -1);

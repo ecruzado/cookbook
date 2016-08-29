@@ -11,7 +11,8 @@ let list =  async (req, res) => {
         .orderByRaw('id DESC')
         //.limit(50)
         .select('recipe.*',
-            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'));
+            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'),
+            knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as rateNumber'));
     res.json(query);
 };
 
@@ -21,7 +22,8 @@ let getById =  async (req, res) => {
         .where('recipe.id', req.params.id)
         .select('recipe.*','ingredient.id as ingredientId',
             'ingredient.name as ingredientName','ingredient.quantity',
-            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'));
+            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'),
+            knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'));
     //sleep.sleep(1);
     if(query){
         let recipe = {
@@ -30,7 +32,8 @@ let getById =  async (req, res) => {
             category: query[0].category,
             chef: query[0].chef,
             preparation: query[0].preparation,
-            rate: query[0].rate
+            rate: query[0].rate,
+            rateNumber: query[0].ratenumber
         };
         recipe.ingredients = query.map(row=>({
             id: row.ingredientId,

@@ -1,10 +1,38 @@
 import React from 'react'
+import autobind from 'autobind-decorator';
 
-export const Star = ({cssClass, onMouseEnter, onMouseLeave, onClick})=> {
-    return (
-        <i className={cssClass} 
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            onClick={onClick}>star</i>
-    )
+export class Star extends React.Component {
+
+    constructor(props){
+        super(props);
+    }
+
+    @autobind
+    onMouseEnter(){
+        if(this.props.onMouseEnter){
+            this.props.onMouseEnter(this.props.index);
+        }
+    }
+
+    @autobind
+    onMouseLeave(){
+        if(this.props.onMouseLeave){
+            this.props.onMouseLeave(this.props.index);
+        }
+    }
+
+    @autobind
+    onClick(){
+        this.props.onClick(this.props.index);
+    }
+
+    render(){
+        return (
+            <i className={this.props.cssClass} 
+                onMouseEnter={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}
+                onClick={this.onClick}>star</i>
+        );
+
+    }
 };

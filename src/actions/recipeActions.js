@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import recipeApi from '../api/mockRecipeApi';
 import recipeApiClient from '../apiClient/recipeApiClient';
+import {RatingApiClient} from '../apiClient/ratingApiClient';
 import toastr from 'toastr';
 
 let nextRecipeId = 50;
@@ -191,3 +192,26 @@ export const deleteRecipe = (id) => {
     }
 };
 
+export const saveRating = (rating) => {
+    console.log('saveRating action: ');
+    console.log(rating);
+    return function(dispatch){
+        console.log(RatingApiClient.postRating);
+        RatingApiClient.postRating(rating).end((err, res)=>{
+            console.log('finishid: ');
+            if(!err){
+                if(res.statusCode === 200
+                    && res.body.message === "success"){
+                    toastr.success("Rated!");
+                    console.log(res.body);
+                    dispatch(loadRecipe(rating.recipeid));
+                }else{
+                    toastr.error("Error: "+res.body.message);
+                }
+            }else{
+                toastr.error(err);
+                dispatch(loadRecipe(rating.recipeid));
+            }
+        });
+    }
+};

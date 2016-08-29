@@ -13,7 +13,7 @@ export class Rating extends React.Component{
         this.state = {
             arr: new Array(+props.stars)
                 .fill(cssClassGrey)
-                .map((x,i)=> i<=+this.props.rate? cssClassBlack:cssClassGrey),
+                .map((x,i)=> i<=(this.props.rate-1)? cssClassBlack:cssClassGrey),
             rated: false
         };
     }
@@ -31,11 +31,8 @@ export class Rating extends React.Component{
     
     @autobind
     onMouseLeave(index){
-        //if(this.state.rated)
-            //return;
-        //console.log("leave");
         let temp = this.state.arr.map((x,i)=>{
-            return i<=+this.props.rate? cssClassBlack:cssClassGrey;
+            return i<=(this.props.rate-1)? cssClassBlack:cssClassGrey;
         });
         this.setState({
             arr: temp
@@ -44,33 +41,36 @@ export class Rating extends React.Component{
 
     @autobind
     onClick(index){
+        console.log("onClick");
         this.setState({
             rated: true
         });
-        this.props.onRate(index);
-        let temp = this.state.arr.map((x,i)=>{
-            return i<=index? cssClassAmber: cssClassGrey;
-        });
-        console.log(temp);
-        this.setState({
-            arr: temp
-        })
+        this.props.onRate(index + 1);
+        // let temp = this.state.arr.map((x,i)=>{
+        //     return i<=index? cssClassAmber: cssClassGrey;
+        // });
+        // console.log(temp);
+        // this.setState({
+        //     arr: temp
+        // })
     }   
 
     render(){
         console.log(+new Date());
         console.log(this.state.rated);
+        let onMouseEnter = this.state.rated? null:this.onMouseEnter;
+        let onMouseLeave = this.state.rated? null:this.onMouseLeave;
         return(
             <div>
-                {!this.rated && this.props.allowClick && this.state.arr && this.state.arr.map((x,i)=>(
-                    <Star key={i} cssClass={x} 
-                        onMouseEnter={this.onMouseEnter.bind(this,i)}
-                        onMouseLeave={this.onMouseLeave.bind(this,i)}
-                        onClick={this.onClick.bind(this,i)}/>
-                ))}
                 {this.state.arr && this.state.arr.map((x,i)=>(
-                    <Star key={i} cssClass={x} />
-                ))}                
+                    <Star key={i} 
+                        cssClass={x}
+                        index={i} 
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        onClick={this.onClick}/>
+                ))}
+                <span>{this.props.message}</span>
             </div>    
         );                 
     }    
