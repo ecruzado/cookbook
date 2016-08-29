@@ -1,7 +1,7 @@
 import React from 'react';
-import Ingredient from './Ingredient';
+import {Ingredient} from './Ingredient';
 
-const IngredientList = ({list, onAdd, onRemove, onChange})=> {
+export const IngredientList = ({list, onAdd, onRemove, onChange})=> {
     let inputIngredient, inputQuanity;
     return (
         <table className="responsive-table">
@@ -45,5 +45,3 @@ const IngredientList = ({list, onAdd, onRemove, onChange})=> {
         </table>
     );
 };
-
-export default IngredientList;

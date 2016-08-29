@@ -1,8 +1,7 @@
 import React from 'react';
 
-const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
-    let inputName, inputQuantity;
-    
+export const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
+    let inputName, inputQuantity;  
     return (
         <tr>
             <td>
@@ -42,5 +41,3 @@ const Ingredient = ({id, name, quantity, onChange, onRemove})=> {
         </tr>
     );
 };
-
-export default Ingredient;

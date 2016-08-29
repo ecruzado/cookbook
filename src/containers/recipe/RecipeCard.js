@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import {Link} from 'react-router';
 import {Rating} from '../../components/rating';
 
-const RecipeCard = ({ onClick, id, name, chef, category, preparation, rate }) => (
+export const RecipeCard = ({ onClick, id, name, chef, category, preparation, rate }) => (
   <div className="col s12 m6">
     <div className="card light-green lighten-5">
         <div className="card-content ">
@@ -20,14 +20,3 @@ const RecipeCard = ({ onClick, id, name, chef, category, preparation, rate }) =>
     </div>
   </div>
 );
-
-
-RecipeCard.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  chef: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  preparation: PropTypes.string.isRequired
-};
-
-export default RecipeCard;

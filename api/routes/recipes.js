@@ -56,7 +56,7 @@ let post = async (req, res) => {
     delete recipeInsert.ingredients;
     delete recipeInsert.id;
 
-    sleep.sleep(2);
+    sleep.sleep(1);
 
     cnn.transaction(async (trx) => {
         try {
@@ -112,6 +112,7 @@ let put = async (req, res) => {
 
     delete recipeUpdate.ingredients;
     delete recipeUpdate.id;
+    delete recipeUpdate.rate;
 
     console.log("from api");
     //sleep.sleep(3);
@@ -169,6 +170,15 @@ let deleteRecipe = async (req, res) => {
     const recipeId = req.params.id;
     cnn.transaction(async (trx) => {
         try {
+
+            await trx.from('comment')
+                .where({recipeid: recipeId})
+                .del();
+
+            await trx.from('rating')
+                .where({recipeid: recipeId})
+                .del();
+
             await trx.from('ingredient')
                 .where({recipeid: recipeId})
                 .del();

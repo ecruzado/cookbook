@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterLink from './FilterLink';
 
-const ListFilter = () => (
+export const ListFilter = () => (
   <div className="row center-align">
     <ul className="pagination">
       <FilterLink filter="SHOW_ALL">
@@ -22,5 +22,3 @@ const ListFilter = () => (
     </ul>
   </div>
 );
-
-export default ListFilter;

@@ -1,11 +1,38 @@
 import React, { PropTypes } from 'react';
-import RecipeCard from './RecipeCard';
+import {RecipeCard} from './RecipeCard';
 import {Link} from 'react-router';
 import autobind from 'autobind-decorator';
 import {Modal} from '../../components/modal';
+import { connect } from 'react-redux';
+import {deleteRecipe} from '../../actions/recipeActions';
+
+const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
+  switch (categoryFilter) {
+    case 'SHOW_ALL':
+      return recipes.filter(t => nameFilter==='' || t.name.indexOf(nameFilter) > -1);
+    case 'SHOW_PASTAS':
+      return recipes.filter(t => t.category === 'PASTAS' && (nameFilter==='' || t.name.indexOf(nameFilter) > -1));
+    case 'SHOW_SALADS':
+      return recipes.filter(t => t.category === 'SALADS' && (nameFilter==='' || t.name.indexOf(nameFilter) > -1));
+    case 'SHOW_MEAT':
+      return recipes.filter(t => t.category === 'MEAT' && (nameFilter==='' || t.name.indexOf(nameFilter) > -1));
+    case 'SHOW_DESSERTS':
+      return recipes.filter(t => t.category === 'DESSERTS' && (nameFilter==='' || t.name.indexOf(nameFilter) > -1));
+  }
+};
 
 
-class RecipeList extends React.Component {
+@connect(
+  (state) => ({
+    recipes: getVisibleRecipes(state.recipes, state.categoryFilter, state.nameFilter)
+  }),
+  (dispatch) => ({
+    onRecipeClick: (id) => {
+      dispatch(deleteRecipe(id));
+    }
+  })  
+)
+export class RecipeList extends React.Component {
   
   constructor(props, context){
     super(props, context);
@@ -60,5 +87,3 @@ RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
   onRecipeClick: PropTypes.func.isRequired
 };
-
-export default RecipeList;

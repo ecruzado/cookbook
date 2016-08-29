@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import IngredientList from './ingredient/IngredientList';
+import {IngredientList} from './ingredient/IngredientList';
 import {Link, IndexLink } from 'react-router';
 
 export const RecipeForm = ({recipe,onChange,onSubmit,classButton,textButton,

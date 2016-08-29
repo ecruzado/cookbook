@@ -1,9 +1,6 @@
 import * as types from '../actions/actionTypes';
 
-export default function recipesReducer(state = [], action){
-    //  console.log("recipesReducer: ");
-    //  console.log(action);
-    //  console.log(state);
+export const recipesReducer = (state = [], action) => {
     switch(action.type){
         case types.CREATE_RECIPE:
             return [
@@ -25,4 +22,4 @@ export default function recipesReducer(state = [], action){
         default:
             return state;
     }
-}
+};

@@ -12,10 +12,7 @@ const initialState = {
     error: ''
 };
 
-export default function recipeReducer(state = initialState, action){
-    // console.log("recipeReducer: ");
-    // console.log(action);
-    // console.log(state);
+export const recipeReducer = (state = initialState, action) => {
     switch(action.type){
         case types.LOAD_RECIPE_REQUEST:
             return {
@@ -63,4 +60,4 @@ export default function recipeReducer(state = initialState, action){
         default:
             return state;
     }
-}
+};

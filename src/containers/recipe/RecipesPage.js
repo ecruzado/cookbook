@@ -1,12 +1,12 @@
 import React from 'react';
-import ListFilter from './ListFilter';
-import VisibleRecipeList from './VisibleRecipeList';
+import {ListFilter} from './ListFilter';
+import {RecipeList} from './RecipeList';
 
 export const RecipesPage = ()=>{
   return(
     <div>
       <ListFilter />
-      <VisibleRecipeList />
+      <RecipeList />
     </div>
   );
 };
