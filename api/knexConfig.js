@@ -7,5 +7,5 @@ export default {
       "password": 'S1stem@s',
       "database": 'db'
   },
-  debug: true
+  debug: false
 };

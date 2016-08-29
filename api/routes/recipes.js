@@ -17,33 +17,35 @@ let list =  async (req, res) => {
 };
 
 let getById =  async (req, res) => {
-    let query = await cnn.from('recipe')
-        .innerJoin('ingredient','recipe.id','ingredient.recipeid')
+    console.log('get begin');
+    let recipe = await cnn.from('recipe')
         .where('recipe.id', req.params.id)
-        .select('recipe.*','ingredient.id as ingredientId',
-            'ingredient.name as ingredientName','ingredient.quantity',
+        .select('recipe.*',
             knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'),
-            knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'));
-    //sleep.sleep(1);
-    if(query){
-        let recipe = {
-            id: query[0].id,
-            name: query[0].name,
-            category: query[0].category,
-            chef: query[0].chef,
-            preparation: query[0].preparation,
-            rate: query[0].rate,
-            rateNumber: query[0].ratenumber
-        };
-        recipe.ingredients = query.map(row=>({
-            id: row.ingredientId,
-            name: row.ingredientName,
-            quantity: row.quantity
-        }));
-        res.json(recipe);
-    }else{
-        res.json({});
-    }
+            knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'))
+        .first()
+        .catch(e=>{
+            console.log(e);
+        });
+    
+    let ingredients = await cnn.from('ingredient')
+        .where('recipeid', req.params.id)
+        .select()
+        .catch(e=>{
+            console.log(e);
+        });
+
+    let comments = await cnn.from('comment')
+        .where('recipeid', req.params.id)
+        .orderByRaw('id DESC')
+        .select()
+        .catch(e=>{
+            console.log(e);
+        });
+
+    recipe.ingredients = ingredients;
+    recipe.comments = comments;
+    res.json(recipe);
 };
 
 let post = async (req, res) => { 

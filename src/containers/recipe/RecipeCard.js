@@ -15,7 +15,8 @@ export const RecipeCard = ({ onClick, id, name, chef, category, preparation, rat
             <span> | </span>
             <i className="material-icons">person_pin</i>{chef}
             <a href="javascript:void(0)"className="right" onClick={onClick}>Delete</a>
-            <Link className="right" to={"/recipe/" + id}>Edit</Link>
+            <Link className="right" to={"/recipe/edit/" + id}>Edit</Link>
+            <Link className="right" to={"/recipe/" + id}>View</Link>
         </div>        
     </div>
   </div>

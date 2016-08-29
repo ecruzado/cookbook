@@ -56,8 +56,8 @@ export class Rating extends React.Component{
     }   
 
     render(){
-        console.log(+new Date());
-        console.log(this.state.rated);
+        // console.log(+new Date());
+        // console.log(this.state.rated);
         let onMouseEnter = this.state.rated? null:this.onMouseEnter;
         let onMouseLeave = this.state.rated? null:this.onMouseLeave;
         return(
