@@ -31,9 +31,9 @@ export class Rating extends React.Component{
     
     @autobind
     onMouseLeave(index){
-        if(this.state.rated)
-            return;
-        console.log("leave");
+        //if(this.state.rated)
+            //return;
+        //console.log("leave");
         let temp = this.state.arr.map((x,i)=>{
             return i<=+this.props.rate? cssClassBlack:cssClassGrey;
         });
@@ -51,15 +51,15 @@ export class Rating extends React.Component{
         let temp = this.state.arr.map((x,i)=>{
             return i<=index? cssClassAmber: cssClassGrey;
         });
-        //console.log(temp);
+        console.log(temp);
         this.setState({
             arr: temp
         })
     }   
 
     render(){
-        //console.log(+new Date());
-        //console.log(this.state.arr);
+        console.log(+new Date());
+        console.log(this.state.rated);
         return(
             <div>
                 {!this.rated && this.props.allowClick && this.state.arr && this.state.arr.map((x,i)=>(
@@ -68,7 +68,7 @@ export class Rating extends React.Component{
                         onMouseLeave={this.onMouseLeave.bind(this,i)}
                         onClick={this.onClick.bind(this,i)}/>
                 ))}
-                {!this.props.allowClick && this.state.arr && this.state.arr.map((x,i)=>(
+                {this.state.arr && this.state.arr.map((x,i)=>(
                     <Star key={i} cssClass={x} />
                 ))}                
             </div>    

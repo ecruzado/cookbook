@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 import routes from './routes';
 import '../node_modules/materialize-css/dist/css/materialize.css';
-import '../node_modules/toastr/build/toastr.min.css ';
+//import '../node_modules/toastr/build/toastr.min.css ';
 import './styles/styles.css';
 import $ from "jquery";
 import {loadRecipes} from  './actions/recipeActions';
