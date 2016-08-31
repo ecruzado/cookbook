@@ -11,7 +11,7 @@ let list =  async (req, res) => {
         .orderByRaw('id DESC')
         //.limit(50)
         .select('recipe.*',
-            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'),
+            knex.raw('(select coalesce(round(avg(rate)),0) from rating where rating.recipeid = recipe.id) as rate'),
             knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as rateNumber'));
     res.json(query);
 };
@@ -21,7 +21,7 @@ let getById =  async (req, res) => {
     let recipe = await cnn.from('recipe')
         .where('recipe.id', req.params.id)
         .select('recipe.*',
-            knex.raw('(select round(avg(rate)) from rating where rating.recipeid = recipe.id) as rate'),
+            knex.raw('(select coalesce(round(avg(rate)),0) from rating where rating.recipeid = recipe.id) as rate'),
             knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'))
         .first()
         .catch(e=>{
@@ -59,6 +59,7 @@ let post = async (req, res) => {
     //console.log(ingredientsInsert);
 
     delete recipeInsert.ingredients;
+    delete recipeInsert.comments;
     delete recipeInsert.id;
 
     sleep.sleep(1);
@@ -116,8 +117,11 @@ let put = async (req, res) => {
     console.log(ingredientsInsert);
 
     delete recipeUpdate.ingredients;
+    delete recipeUpdate.comments;
+    
     delete recipeUpdate.id;
     delete recipeUpdate.rate;
+    delete recipeUpdate.ratenumber;
 
     console.log("from api");
     //sleep.sleep(3);

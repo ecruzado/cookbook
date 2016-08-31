@@ -4,8 +4,6 @@ import {Link, IndexLink } from 'react-router';
 
 export const RecipeForm = ({recipe,onChange,onSubmit,classButton,textButton,
   onChangeIngredient,onAddIngredient,onRemoveIngredient}) => {
-  console.log('RecipeForm render');  
-  console.log(recipe);
   return(
     <form className="col s12" onSubmit={onSubmit}>
       <div className="row">

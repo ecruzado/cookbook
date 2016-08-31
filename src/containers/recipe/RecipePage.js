@@ -32,6 +32,10 @@ import autobind from 'autobind-decorator';
 )
 export class RecipePage extends React.Component {
   
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor(props){
     super(props);
     this.state = {
@@ -79,6 +83,11 @@ export class RecipePage extends React.Component {
 
   @autobind
   onAddIngredient(ingredient){
+    if(this.state.recipe.ingredients.length >= 10){
+      toastr.warning('You can only add 10 ingredients');
+      return;
+    }
+    
     let lastId = 1;
     if(this.state.recipe.ingredients.length > 0){
       lastId = this.state.recipe.ingredients[this.state.recipe.ingredients.length - 1].id;
@@ -132,8 +141,8 @@ export class RecipePage extends React.Component {
 
 
   render(){
-    console.log(+ new Date());
-    console.log(this.state.recipe);
+    // console.log(+ new Date());
+    // console.log(this.state.recipe);
     
     let classButton = "waves-effect waves-light btn-large recipe-button ";
     if(this.props.error ||
@@ -181,8 +190,6 @@ export class RecipePage extends React.Component {
     );
   }
 }
-
-RecipeForm.contextTypes = {
-  router: PropTypes.object
-};
-
+// RecipeForm.contextTypes = {
+//   router: PropTypes.object
+// };

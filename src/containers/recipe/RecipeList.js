@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import {deleteRecipe} from '../../actions/recipeActions';
 
 const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
-  console.log(recipes);
   switch (categoryFilter) {
     case 'SHOW_ALL':
       return recipes.filter(t => nameFilter==='' || t.name.indexOf(nameFilter) > -1);
@@ -35,6 +34,11 @@ const getVisibleRecipes = (recipes, categoryFilter, nameFilter) => {
 )
 export class RecipeList extends React.Component {
   
+  static propTypes = {
+    recipes: PropTypes.array.isRequired,
+    onRecipeClick: PropTypes.func.isRequired
+  }
+
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -83,8 +87,3 @@ export class RecipeList extends React.Component {
     );
   }
 }
-
-RecipeList.propTypes = {
-  recipes: PropTypes.array.isRequired,
-  onRecipeClick: PropTypes.func.isRequired
-};

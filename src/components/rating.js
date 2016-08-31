@@ -41,25 +41,15 @@ export class Rating extends React.Component{
 
     @autobind
     onClick(index){
-        console.log("onClick");
         this.setState({
             rated: true
         });
         this.props.onRate(index + 1);
-        // let temp = this.state.arr.map((x,i)=>{
-        //     return i<=index? cssClassAmber: cssClassGrey;
-        // });
-        // console.log(temp);
-        // this.setState({
-        //     arr: temp
-        // })
     }   
 
     render(){
-        // console.log(+new Date());
-        // console.log(this.state.rated);
-        let onMouseEnter = this.state.rated? null:this.onMouseEnter;
-        let onMouseLeave = this.state.rated? null:this.onMouseLeave;
+        let onMouseEnter = (!this.state.rated && this.props.allowClick)? this.onMouseEnter:null;
+        let onMouseLeave = (!this.state.rated && this.props.allowClick)? this.onMouseLeave:null;
         return(
             <div>
                 {this.state.arr && this.state.arr.map((x,i)=>(
