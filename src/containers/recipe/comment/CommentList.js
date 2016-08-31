@@ -6,12 +6,12 @@ export const CommentList = ({list}) => {
     console.log(typeof list);
     console.log(list);
     return (
-        <div>
+        <ul className="collection">
         {list && list.map((item,i) => (
             <Comment key={i}
                 {...item}
             />
-        ))};
-        </div>
+        ))}
+        </ul>
     );
 };

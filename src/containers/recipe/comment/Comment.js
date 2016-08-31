@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const Comment = ({id, user, comment})=>{
+export const Comment = ({id, username, comment})=>{
     return(
-        <div>
-            {id}
-            {user}
-            {comment}
-        </div>
+        <li className="collection-item avatar">
+            <i className="material-icons circle green">perm_identity</i>
+            <span className="title">{username}</span>
+            <p>{comment}</p>
+        </li>
     );
 };

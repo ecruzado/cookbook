@@ -35,9 +35,9 @@ export class CommentForm extends React.Component{
           </div>
         </div>
         <div className="row right-align">
-          <button type="submit" className="">
+          <button type="submit" className="waves-effect waves-light btn-large">
             <i className="material-icons left">done</i>
-            Grabar
+            Comment
           </button>
         </div>
       </form>

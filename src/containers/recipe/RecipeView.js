@@ -87,33 +87,35 @@ export class RecipeView extends React.Component {
   }
 
     render(){
-        let rateMessage = 'AVG: ' + this.props.recipe.rate + ' NUMBER: '+this.props.recipe.rateNumber;
+        let rateMessage = 'AVG: ' + this.props.recipe.rate + ' NUMBER: '+this.props.recipe.ratenumber;
         
         return(
         <div className="container">
+            <h2 className="col s12 header">{this.props.recipe.name}</h2>
             <div className="col s12">
-                <div className="row">
-                    {this.props.recipe.name}
-                </div>
-                <div className="row">
+                <h4>Chef</h4>
+                <p>
                     {this.props.recipe.chef}
-                </div>
-                <div className="row">
+                </p>
+                <h4>Category</h4>
+                <p>
                     {this.props.recipe.category}
-                </div>
-                <div className="row">
+                </p>
+                <h4>Preparation</h4>
+                <p>
                     {this.props.recipe.preparation}
-                </div>
+                </p>
+                <h4>Rating</h4>
+                {this.props.recipe && this.props.recipe.rate && (
+                <Rating stars="5" 
+                    rate={this.props.recipe.rate}
+                    message={rateMessage} 
+                    allowClick={true} 
+                    onRate={this.onRate}/>
+                )}
             </div>
 
-            {this.props.recipe && this.props.recipe.rate &&
-            <Rating stars="5" 
-                rate={this.props.recipe.rate}
-                message={rateMessage} 
-                allowClick={true} 
-                onRate={this.onRate}/>
-            }
-            
+            <h3>Comments</h3>
             <CommentForm onSubmitComment={this.onAddComment}/>
 
             {this.state.recipe && this.state.recipe.comments && (
