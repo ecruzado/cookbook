@@ -13,6 +13,13 @@ class RecipeApiClient {
         return req;
     }
 
+    static getRecipeBySlug(slug){
+        const req = superagent['get']('http://localhost:8888/recipes/name/'+slug)
+            .timeout(4000);
+        return req;
+    }
+
+
     static postRecipe(recipe){
         const req = superagent['post']('http://localhost:8888/recipes')
             .timeout(6000)

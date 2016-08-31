@@ -13,8 +13,8 @@ import {CommentApiClient} from '../../apiClient/commentApiClient';
       recipe: state.recipe.recipe
   }),
   (dispatch) => ({
-      onLoadRecipe: (id) =>{
-        dispatch(loadRecipe(id));
+      onLoadRecipe: (id ,slug) =>{
+        dispatch(loadRecipe(id, slug));
       },
       onSaveRating: (rating) =>{
         dispatch(saveRating(rating));
@@ -30,7 +30,7 @@ export class RecipeView extends React.Component {
     }
 
     componentDidMount(){
-        this.props.onLoadRecipe(this.props.params.id);
+        this.props.onLoadRecipe(null, this.props.params.slug);
     }    
 
     componentWillReceiveProps(nextProps) {

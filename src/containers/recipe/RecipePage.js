@@ -145,8 +145,7 @@ export class RecipePage extends React.Component {
     // console.log(this.state.recipe);
     
     let classButton = "waves-effect waves-light btn-large recipe-button ";
-    if(this.props.error ||
-      this.props.isLoading || 
+    if(this.props.isLoading || 
       this.props.isSaving){
       classButton += "disabled"
     }

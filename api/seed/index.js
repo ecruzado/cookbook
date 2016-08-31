@@ -4,6 +4,7 @@ import {ingredients} from './data/ingredient'
 import {ratings} from './data/rating'
 import {comments} from './data/comment'
 import knexConfig from '../knexConfig';
+import slug from 'slug';
 
 const seedDb = async ()=>{
   let db = knex(knexConfig);
@@ -16,6 +17,7 @@ const seedDb = async ()=>{
   .createTable('recipe', (table) => {
     table.increments('id');
     table.string('name', 500);
+    table.string('slug', 500);
     table.string('chef', 200);
     table.string('category', 50);
     table.string('preparation', 4000);  
@@ -38,8 +40,10 @@ const seedDb = async ()=>{
     table.string('username', 200);
     table.string('comment',1000);
   });
+  let arr = Object.assign([], recipes);
+  arr = arr.map((item,i)=>({...item, slug:slug(item.name)}));
 
-  await db('recipe').insert(recipes); 
+  await db('recipe').insert(arr); 
   await db('rating').insert(ratings); 
   await db('comment').insert(comments);
   await db('ingredient').insert(ingredients);

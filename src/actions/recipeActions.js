@@ -6,80 +6,80 @@ import toastr from 'toastr';
 
 let nextRecipeId = 50;
 
-export const createRecipe = (recipe) => {
-    return {type: types.CREATE_RECIPE, recipe};    
-};
+export const createRecipe = (recipe) => ({
+    type: types.CREATE_RECIPE, recipe    
+});
 
-export const updateRecipes = (recipe) => {
-    return {type: types.UPDATE_RECIPE, recipe};
-};
+export const updateRecipes = (recipe) => ({
+    type: types.UPDATE_RECIPE, recipe
+});
 
-export const deleteRecipes = (id) => {
-    return {type: types.DELETE_RECIPE, id};
-};
+export const deleteRecipes = (id) => ({
+    type: types.DELETE_RECIPE, id
+});
 
-export const setCategoryFilter = (category) => {
-    return {type: types.SET_CATEGORY_FILTER, category};
-};
+export const setCategoryFilter = (category) => ({
+    type: types.SET_CATEGORY_FILTER, category
+});
 
-export const rateRecipe = (id) => {
-    return {type: types.RATE_RECIPE, id};
-};
+export const rateRecipe = (id) => ({
+    type: types.RATE_RECIPE, id
+});
 
-export const setCurrentRecipeId = (id) => {
-    return {type: types.SET_CURRENT_RECIPEID, id};
-};
+export const setCurrentRecipeId = (id) => ({
+    type: types.SET_CURRENT_RECIPEID, id
+});
 
-export const setNameFilter = (name) => {
-    return {type: types.SET_NAME_FILTER, name};
-};
+export const setNameFilter = (name) => ({
+    type: types.SET_NAME_FILTER, name
+});
 
-export const loadRecipesSuccess = (recipes) => {
-    return {type: types.LOAD_RECIPES_SUCCESS, recipes};
-};
-
-
-export const loadRecipeRequest = () => {
-    return {type: types.LOAD_RECIPE_REQUEST};
-};
-export const loadRecipeSuccess = (recipe) => {
-    return {type: types.LOAD_RECIPE_SUCCESS, recipe};
-};
-export const loadRecipeError = (error) => {
-    return {type: types.LOAD_RECIPE_ERROR, error};
-};
-
-export const createRecipeRequest = () => {
-    return {type: types.CREATE_RECIPE_REQUEST};
-};
-export const createRecipeSuccess = (recipe) => {
-    return {type: types.CREATE_RECIPE_SUCCESS, recipe};
-};
-export const createRecipeError = (error) => {
-    return {type: types.CREATE_RECIPE_ERROR, error};
-};
+export const loadRecipesSuccess = (recipes) => ({
+    type: types.LOAD_RECIPES_SUCCESS, recipes
+});
 
 
-export const updatRecipeRequest = () => {
-    return {type: types.UPDATE_RECIPE_REQUEST};
-};
-export const updateRecipeSuccess = (recipe) => {
-    return {type: types.UPDATE_RECIPE_SUCCESS, recipe};
-};
-export const updateRecipeError = (error) => {
-    return {type: types.UPDATE_RECIPE_ERROR, error};
-};
+export const loadRecipeRequest = () => ({
+    type: types.LOAD_RECIPE_REQUEST
+});
+export const loadRecipeSuccess = (recipe) => ({
+    type: types.LOAD_RECIPE_SUCCESS, recipe
+});
+export const loadRecipeError = (error) => ({
+    type: types.LOAD_RECIPE_ERROR, error
+});
+
+export const createRecipeRequest = () => ({
+    type: types.CREATE_RECIPE_REQUEST
+});
+export const createRecipeSuccess = (recipe) => ({
+    type: types.CREATE_RECIPE_SUCCESS, recipe
+});
+export const createRecipeError = (error) => ({
+    type: types.CREATE_RECIPE_ERROR, error
+});
 
 
-export const deleteRecipeRequest = () => {
-    return {type: types.DELETE_RECIPE_REQUEST};
-};
-export const deleteRecipeSuccess = (recipe) => {
-    return {type: types.DELETE_RECIPE_SUCCESS, recipe};
-};
-export const deleteRecipeError = (error) => {
-    return {type: types.DELETE_RECIPE_ERROR, error};
-};
+export const updatRecipeRequest = () => ({
+    type: types.UPDATE_RECIPE_REQUEST
+});
+export const updateRecipeSuccess = (recipe) => ({
+    type: types.UPDATE_RECIPE_SUCCESS, recipe
+});
+export const updateRecipeError = (error) => ({
+    type: types.UPDATE_RECIPE_ERROR, error
+});
+
+
+export const deleteRecipeRequest = () => ({
+    type: types.DELETE_RECIPE_REQUEST
+});
+export const deleteRecipeSuccess = (recipe) => ({
+    type: types.DELETE_RECIPE_SUCCESS, recipe
+});
+export const deleteRecipeError = (error) => ({
+    type: types.DELETE_RECIPE_ERROR, error
+});
 
 
 export const loadRecipes = () => {
@@ -90,11 +90,15 @@ export const loadRecipes = () => {
     };
 };
 
-export const loadRecipe = (id) => {
-    return function(dispatch){
+export const loadRecipe = (id, slug) => {
+    return (dispatch) => {
         dispatch(loadRecipeRequest());
-        if(id && id != 0){
-            recipeApiClient.getRecipe(id).end((err, res)=>{
+        let apiFunc = slug? recipeApiClient.getRecipeBySlug :
+            recipeApiClient.getRecipe;
+        let param = slug? slug:id;
+
+        if(param){
+            apiFunc(param).end((err, res)=>{
                 if(!err){
                     dispatch(loadRecipeSuccess(res.body));
                 }else{
@@ -116,7 +120,7 @@ export const loadRecipe = (id) => {
 };
 
 export const saveRecipe = (recipe) => {
-    return function(dispatch){
+    return (dispatch) => {
         dispatch(createRecipeRequest());
         
         recipeApiClient.postRecipe(recipe).end((err, res)=>{
@@ -127,18 +131,24 @@ export const saveRecipe = (recipe) => {
                     dispatch(createRecipeSuccess(res.body.data));
                     dispatch(createRecipe(res.body.data));
                 }else{
-                    toastr.error("Error: "+res.body.message);
+                    toastr.error("Error: "+res.body.error);
+                    dispatch(createRecipeError(res.body.error));
                 }
             }else{
-                toastr.error(err);
-                dispatch(createRecipeError(err));
+                if(res.body.error){
+                    toastr.error(res.body.error);
+                    dispatch(createRecipeError(res.body.error));
+                }else{
+                    toastr.error(err);
+                    dispatch(createRecipeError(err));
+                }
             }
         });
     };
 };
 
 export const updateRecipe = (recipe) => {
-    return function(dispatch){
+    return (dispatch) => {
         dispatch(updatRecipeRequest());
         
         recipeApiClient.putRecipe(recipe).end((err, res)=>{
@@ -149,19 +159,25 @@ export const updateRecipe = (recipe) => {
                     dispatch(updateRecipeSuccess(res.body.data));
                     dispatch(updateRecipes(res.body.data));
                 }else{
-                    toastr.error("Error: "+res.body.message);
+                    toastr.error("Error: "+res.body.error);
+                    dispatch(updateRecipeError(res.body.error));
                 }                
                 
             }else{
-                toastr.error(err);
-                dispatch(updateRecipeError(err));
+                if(res.body.error){
+                    toastr.error(res.body.error);
+                    dispatch(createRecipeError(res.body.error));
+                }else{
+                    toastr.error(err);
+                    dispatch(updateRecipeError(err));
+                }                
             }
         });
     };
 };
 
 export const deleteRecipe = (id) => {
-    return function(dispatch){
+    return (dispatch) => {
         dispatch(deleteRecipeRequest());
         
         recipeApiClient.deleteRecipe(id).end((err, res)=>{
@@ -178,7 +194,7 @@ export const deleteRecipe = (id) => {
 };
 
 export const saveRating = (rating) => {
-    return function(dispatch){
+    return (dispatch) => {
         RatingApiClient.postRating(rating).end((err, res)=>{
             if(!err){
                 if(res.statusCode === 200

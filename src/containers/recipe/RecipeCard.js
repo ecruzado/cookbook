@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import {Link} from 'react-router';
 import {Rating} from '../../components/rating';
 
-export const RecipeCard = ({ onClick, id, name, chef, category, preparation, rate }) => (
+export const RecipeCard = ({ onClick, id, name, chef, category, preparation, slug, rate }) => (
   <div className="col s12 m6">
     <div className="card light-green lighten-5">
         <div className="card-content ">
@@ -16,7 +16,7 @@ export const RecipeCard = ({ onClick, id, name, chef, category, preparation, rat
             <i className="material-icons">person_pin</i>{chef}
             <a href="javascript:void(0)"className="right" onClick={onClick}>Delete</a>
             <Link className="right" to={"/recipe/edit/" + id}>Edit</Link>
-            <Link className="right" to={"/recipe/" + id}>View</Link>
+            <Link className="right" to={"/recipe/" + slug}>View</Link>
         </div>        
     </div>
   </div>

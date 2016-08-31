@@ -11,7 +11,7 @@ export default (
         <IndexRoute component={RecipesPage} />
         <Route path="about" component={AboutPage} />
         <Route path="recipe" component={RecipePage} />
-        <Route path="recipe/:id" component={RecipeView} />
+        <Route path="recipe/:slug" component={RecipeView} />
         <Route path="recipe/edit/:id" component={RecipePage} />
     </Route>
 );
