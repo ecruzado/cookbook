@@ -2,14 +2,6 @@
     background-color: #4f8511;
 }
 
-.card-action a.right {
-    float: right;
-}
-
-.card-action .material-icons{
-    font-size: 15px;
-}
-
 .recipe-button{
     margin-left: 10px;
 }

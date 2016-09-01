@@ -63,14 +63,14 @@ let getBySlug =  async (req, res) => {
         });
     
     let ingredients = await cnn.from('ingredient')
-        .where('recipeid', req.params.id)
+        .where('recipeid', recipe.id)
         .select()
         .catch(e=>{
             console.log(e);
         });
 
     let comments = await cnn.from('comment')
-        .where('recipeid', req.params.id)
+        .where('recipeid', recipe.id)
         .orderByRaw('id DESC')
         .select()
         .catch(e=>{
