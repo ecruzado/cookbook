@@ -18,7 +18,6 @@ let list =  async (req, res) => {
 };
 
 let getById =  async (req, res) => {
-    console.log('get begin');
     let recipe = await cnn.from('recipe')
         .where('recipe.id', req.params.id)
         .select('recipe.*',
@@ -26,14 +25,14 @@ let getById =  async (req, res) => {
             knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'))
         .first()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
     
     let ingredients = await cnn.from('ingredient')
         .where('recipeid', req.params.id)
         .select()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
 
     let comments = await cnn.from('comment')
@@ -41,7 +40,7 @@ let getById =  async (req, res) => {
         .orderByRaw('id DESC')
         .select()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
 
     recipe.ingredients = ingredients;
@@ -51,7 +50,6 @@ let getById =  async (req, res) => {
 
 
 let getBySlug =  async (req, res) => {
-    console.log('get begin');
     let recipe = await cnn.from('recipe')
         .where('recipe.slug', req.params.slug)
         .select('recipe.*',
@@ -59,14 +57,14 @@ let getBySlug =  async (req, res) => {
             knex.raw('(select count(0) from rating where rating.recipeid = recipe.id) as ratenumber'))
         .first()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
     
     let ingredients = await cnn.from('ingredient')
         .where('recipeid', recipe.id)
         .select()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
 
     let comments = await cnn.from('comment')
@@ -74,7 +72,7 @@ let getBySlug =  async (req, res) => {
         .orderByRaw('id DESC')
         .select()
         .catch(e=>{
-            console.log(e);
+            throw e;
         });
 
     recipe.ingredients = ingredients;
@@ -90,14 +88,12 @@ let post = async (req, res) => {
     if (req.body.ingredients)
         ingredientsInsert = [...req.body.ingredients];
     
-    console.log(recipeInsert);
-    
     let recipeSameName = await cnn.from('recipe')
         .where('name', recipeInsert.name)
         .select();
     
     if(recipeSameName.length>0){
-        res.status(400)
+        res.status(400);
         res.json({error:'There is a recipe with the same name.'});
         return;
     }
@@ -105,7 +101,7 @@ let post = async (req, res) => {
     delete recipeInsert.ingredients;
     delete recipeInsert.comments;
     delete recipeInsert.id;
-    recipeInsert.slug = slug(recipeInsert.name)
+    recipeInsert.slug = slug(recipeInsert.name);
 
     sleep.sleep(1);
 
@@ -157,17 +153,12 @@ let put = async (req, res) => {
     if (req.body.ingredients)
         ingredientsInsert = [...req.body.ingredients];
 
-    console.log(req.params.id);
-    console.log(recipeUpdate);
-    console.log(ingredientsInsert);
-
     let recipeSameName = await cnn.from('recipe')
         .where('name', recipeUpdate.name)
         .select();
-    console.log('Len');
-    console.log(recipeSameName.length);
+
     if(recipeSameName.length>0){
-        res.status(400)
+        res.status(400);
         res.json({error:'There is a recipe with the same name.'});
         return;
     }
@@ -178,9 +169,8 @@ let put = async (req, res) => {
     delete recipeUpdate.id;
     delete recipeUpdate.rate;
     delete recipeUpdate.ratenumber;
-    recipeUpdate.slug = slug(recipeUpdate.name)
+    recipeUpdate.slug = slug(recipeUpdate.name);
 
-    console.log("from api");
     //sleep.sleep(3);
 
     cnn.transaction(async (trx) => {
@@ -189,18 +179,16 @@ let put = async (req, res) => {
                 .where('id',recipeid)
                 .update(recipeUpdate);
 
-            console.log("1");
             recipeUpdate.id = recipeid;
 
             await trx.from('ingredient')
                 .where({recipeid: recipeid})
                 .del();
             
-            console.log("2");
 
             if(ingredientsInsert){
                 ingredientsInsert = ingredientsInsert.map(x=>{
-                    x.recipeid = req.params.id
+                    x.recipeid = req.params.id;
                     delete x.id;
                     return x;
                 });
@@ -224,10 +212,10 @@ let put = async (req, res) => {
                 data: recipeUpdate
             });
 
-        } catch(error) {
+        } catch(e) {
             await trx.rollback();
-            console.log(error);
-            res.json({message: error});
+            res.json({message: e});
+            throw e;
         }
     });
 };

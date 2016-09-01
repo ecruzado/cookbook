@@ -11,8 +11,6 @@ let post = async (req, res) => {
 
     let comment = req.body;
     
-    console.log(comment);
-
     delete comment.id;
 
     try {

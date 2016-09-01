@@ -1,8 +1,8 @@
 import knex from 'knex';
-import {recipes} from './data/recipe'
-import {ingredients} from './data/ingredient'
-import {ratings} from './data/rating'
-import {comments} from './data/comment'
+import {recipes} from './data/recipe';
+import {ingredients} from './data/ingredient';
+import {ratings} from './data/rating';
+import {comments} from './data/comment';
 import knexConfig from '../knexConfig';
 import slug from 'slug';
 
@@ -51,8 +51,6 @@ const seedDb = async ()=>{
 
 try{
   seedDb();
-  console.log('Seed db completed!!!');
 }catch(e){
-  console.log('Seed db error!!!');
-  console.log(e);
+  throw(e);
 }

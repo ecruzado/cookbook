@@ -22,6 +22,14 @@ import {CommentApiClient} from '../../apiClient/commentApiClient';
   })  
 )
 export class RecipeView extends React.Component {
+    
+    static propTypes={
+        recipe: PropTypes.object.isRequired,
+        params: PropTypes.object.isRequired,
+        onSaveRating: PropTypes.func.isRequired,
+        onLoadRecipe: PropTypes.func.isRequired
+    }
+
     constructor(props){
         super(props);
         this.state = {
@@ -51,7 +59,6 @@ export class RecipeView extends React.Component {
 
   @autobind
   onAddComment(text){
-    console.log(text);
     let lastId = 1;
     if(this.props.recipe.comments.length > 0){
       lastId = this.state.recipe.comments[this.state.recipe.comments.length - 1].id;
@@ -76,11 +83,9 @@ export class RecipeView extends React.Component {
                 });
             }else{
                 toastr.error("Error: "+res.body.message);
-                console.log(res.body.message);
             }
         }else{
             toastr.error(err);
-            console.log(err);
         }
 
     });
@@ -88,7 +93,7 @@ export class RecipeView extends React.Component {
 
     render(){
         let rateMessage = 'AVG: ' + this.props.recipe.rate + ' NUMBER: '+this.props.recipe.ratenumber;
-        
+        let allowClick = true;
         return(
         <div className="container">
             <h2 className="col s12 header">{this.props.recipe.name}</h2>
@@ -110,7 +115,7 @@ export class RecipeView extends React.Component {
                 <Rating stars="5" 
                     rate={this.props.recipe.rate}
                     message={rateMessage} 
-                    allowClick={true} 
+                    allowClick={allowClick} 
                     onRate={this.onRate}/>
                 )}
             </div>

@@ -15,10 +15,8 @@ import autobind from 'autobind-decorator';
   (dispatch) => ({
       onRecipeSave: (recipe) => {
         if(recipe.id && recipe.id != 0){
-          console.log('upd');
           dispatch(updateRecipe(recipe));
         }else{
-          console.log('sav');
           dispatch(saveRecipe(recipe));
         }
       },
@@ -34,6 +32,16 @@ export class RecipePage extends React.Component {
   
   static contextTypes = {
     router: PropTypes.object
+  }
+
+  static propTypes = {
+    recipe: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onRecipeSave: PropTypes.func.isRequired,
+    onLoadRecipes: PropTypes.func.isRequired,
+    onLoadRecipe: PropTypes.func.isRequired
   }
 
   constructor(props){
@@ -135,19 +143,14 @@ export class RecipePage extends React.Component {
   saveRecipe(event) {
     event.preventDefault();
     let recipe = Object.assign({}, this.state.recipe);
-    console.log(recipe);
     this.props.onRecipeSave(recipe);
   }
 
-
   render(){
-    // console.log(+ new Date());
-    // console.log(this.state.recipe);
-    
     let classButton = "waves-effect waves-light btn-large recipe-button ";
     if(this.props.isLoading || 
       this.props.isSaving){
-      classButton += "disabled"
+      classButton += "disabled";
     }
 
     let textButton = "SAVE RECIPE";
@@ -171,7 +174,7 @@ export class RecipePage extends React.Component {
       <div className="container">
         {preloader}
         <div className="row">
-          <h3 class="header">Recipe</h3>
+          <h3 className="header">Recipe</h3>
           {this.state.recipe &&
             <RecipeForm
               recipe={this.state.recipe}

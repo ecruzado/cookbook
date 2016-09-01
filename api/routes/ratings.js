@@ -11,8 +11,6 @@ let post = async (req, res) => {
 
     let rate = req.body;
     
-    console.log(rate);
-
     delete rate.id;
 
     try {

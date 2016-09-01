@@ -69,9 +69,7 @@ export class RecipeList extends React.Component {
             <RecipeCard
               key={recipe.id}
               {...recipe}
-              onClick={()=>{
-                this.onDeleteRecipe(recipe.id, recipe.name)}}
-            />
+              onClick={this.onDeleteRecipe} />
           )}
           </div>
           <div className="fixed-action-btn" >
@@ -79,7 +77,7 @@ export class RecipeList extends React.Component {
               <i className="material-icons">add</i>
             </Link>
           </div>
-          <Modal idModal='deleteModal' 
+          <Modal idModal="deleteModal" 
             title="Confirm" 
             message={this.state.deleteMessage}
             onAceptClick={this.onDeleteConfirm}/>
